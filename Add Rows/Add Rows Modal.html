@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     .container {
+       font-family:'Helvetica';
+       font-size: 20px;
+       font-weight: bold;
+     }
+     .label_text {
+       margin: 1px;
+     }
+     .label_error {
+       color: red;
+     }
+     .label_hidden {
+       display: none;
+     }
+     .button {
+       border: 2px solid black;
+       background-color: white;
+       color: black;
+       padding: 14px 28px;
+       font-size: 16px;
+       cursor: pointer;
+       text-align: center;
+       text-decoration: none;
+       display: inline-block;
+       margin: 0.5rem 0.5rem 0rem 0.5rem;
+       cursor: pointer;
+       opacity: 0.6;
+       transition: 0.2s;
+     }
+     .submit_button {
+       border-color: #4CAF50;
+       color: green;
+     }
+     .submit_button:hover {
+       background-color: #4CAF50;
+       color: white;
+     }
+     .cancel_button {
+       border-color: #f44336;
+       color: red;
+     }
+     .cancel_button:hover {
+       background-color: #f44336;
+       color: white;
+     }
+     .button:hover {
+       opacity: 1;
+     }
+     
+     .input {
+       padding:12px 20px;
+       margin:8px 0;
+       font-size: 20px
+     }
+     .name_input {
+       width:12rem;
+     }
+     .number_input {
+       width: 2.5rem;
+       padding: 0.5rem;
+     }
+     
+     .radio-toolbar {
+       margin: 10px;
+     }
+     .radio-toolbar input[type="radio"] {
+       opacity: 0;
+       position: fixed;
+       width: 0;
+     }
+     .radio-toolbar label {
+       display: inline-block;
+       background-color: #ddd;
+       padding: 5px 10px 5px 10px;
+       font-family: sans-serif, Arial;
+       font-size: 16px;
+       border: 2px solid #444;
+       border-radius: 4px;
+       margin: 0rem;
+       width: 8rem;
+       height: 2rem;
+     }
+     .radio-toolbar label:hover {
+       background-color: #dfd;
+     }
+     .radio-toolbar input[type="radio"]:focus + label {
+       border: 2px solid #444;
+     }
+     .radio-toolbar input[type="radio"]:checked + label {
+       background-color: #bfb;
+       border-color: #4c4;
+     }
+     input:invalid+span:after {
+       content: '✖';
+       padding-left: 5px;
+     }
+     input:valid+span:after {
+       content: '✓';
+       padding-left: 5px;
+     }
+     </style>
+    <base target="_top">
+  </head>
+  <body>
+    <div class="container">
+      <div class="label_text">Which tracker do you need more rows for?</div>
+      <form class="radio-toolbar">
+        <input class="" type="radio" id="expense_tracker" name="type" value="Expense Tracker" checked>
+        <label for="expense_tracker">Expense</label>
+        <input type="radio" id="income_tracker" name="type" value="Income Tracker" >
+        <label for="income_tracker">Income</label>
+        <br>
+        Number of Rows: <input class="input number_input" type="number" id="rows" name="rows" value="1" min="1" max="50" required invalid>
+        <span class="validity"></span>
+        <div class="label_text label_hidden" id="check">* You must enter a valid number:</div>
+        <br>
+      </form>
+      <div style="text-align: center;">
+        <button class="button submit_button"type="submit" id="saveButton" onclick="submit()" >Submit</button>
+        <button class="button cancel_button" id="cancel" onclick="cancelButton()" >Cancel</button>
+      </div>
+    </div>
+    
+    <script>
+      function submit(){
+        let rows = document.getElementById("rows").value;
+        if( rows < 1 || rows > 50 ){
+          document.getElementById("rows").value = 1;
+          document.getElementById("check").className = "label_text label_error";
+          return;
+        }
+        let tracker = document.querySelector('input[type="radio"]:checked').value;
+//        console.log("Rows: " + rows);
+//        console.log("Tracker: " + tracker);
+        google.script.run.addRowsTo(tracker, rows);
+        google.script.host.close();
+      }
+      
+      function cancelButton(){ google.script.host.close(); }
+      
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,105 @@
+// ************************** //
+// ******  DEPRECATED  ****** //
+// ************************** //
+
+<!DOCTYPE html>
+<!--
+<html>
+   <head>
+     <style>
+     .button {
+       border: 2px solid black;
+       background-color: white;
+       color: black;
+       padding: 14px 28px;
+       font-size: 16px;
+       cursor: pointer;
+       text-align: center;
+       text-decoration: none;
+       display: inline-block;
+       margin: 4rem 0.5rem; 0rem; 0.5rem;
+       cursor: pointer;
+       opacity: 0.6;
+       transition: 0.2s;
+     }
+     .submit_button {
+       border-color: #4CAF50;
+       color: green;
+     }
+     .submit_button:hover {
+       background-color: #4CAF50;
+       color: white;
+     }
+     .cancel_button {
+       border-color: #f44336;
+       color: red;
+     }
+     .cancel_button:hover {
+       background-color: #f44336;
+       color: white;
+     }
+     .button:hover {
+       opacity: 1;
+     }
+     
+     .input {
+       padding:12px 20px;
+       margin:8px 0;
+       font-size: 20px
+     }
+     .name_input {
+       width:12rem;
+     }
+     .number_input {
+       width:2rem;
+     }
+     .input:invalid {
+       background-color: pink;
+     }
+     </style>
+    <base target="_top">
+  </head>
+  <body>
+    <h1 style="margin:5px">
+      <div>
+        Account Name
+        <form>
+        <input type="text" id="accountName" name="accountName" value="default value" class="input name_input" oninvalid="alert('You must fill out the form!');" required />
+        </form>
+      </div>
+    </h1>
+    <div>
+      <h1 style="margin:5px">Number of Rows</h1>
+      <h5 style="margin:5px">The number of rows added when selecting "Budget Menu➔Add Rows➔Expense Tracker" or "Budget Menu➔Add Rows➔Expense Tracker"</h5>
+      <input type="text" id="numberOfRows" name="numberOfRows" value="default value" class="input number_input" oninvalid="alert('You must fill out the form!');" required />
+    </div>
+    <div>
+      <button id="saveButton" onclick="saveButton()" class="button submit_button">Submit</button>
+      <button id="cancel" onclick="cancelButton()" class="button cancel_button">Cancel</button>
+    </div>
+        
+    <script>
+      
+      function saveButton(){
+        let accountInfo = [];
+        let accountName = document.getElementById("accountName").value;
+        let numberOfRows = document.getElementById("numberOfRows").value;
+        
+        console.log(accountInfo);
+        if( accountName === "" || numberOfRows === "" ){
+          // Validate by showing what was missing in input fields
+          
+          return;
+        }
+        
+        accountInfo.push(accountName);
+        accountInfo.push(parseInt(numberOfRows));
+        google.script.run.saveAccount(accountInfo);
+      }
+      
+      function cancelButton(){ google.script.host.close(); }
+      
+    </script>
+  </body>
+</html>
+-->

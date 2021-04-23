@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+ <script>
+  function loadMonths(){
+    google.script.run.withSuccessHandler(function(arg){
+      let monthSelect = document.getElementById('months');
+      console.log(arg);
+      
+      let option = document.createElement('option');
+      option.value = '';
+      option.text = '-- Select Month --';
+      monthSelect.appendChild(option);
+      
+      arg.forEach(function(item, index){
+        let option = document.createElement('option');
+        option.text = item;
+        monthSelect.appendChild(option);
+      });
+    }).getAvailableMonths();
+  }
+</script>
+<html>
+  <head>
+    <style>
+      .input {
+        padding: 12px 20px;
+        margin: 2rem 0.5rem 0rem 0.5rem;
+        font-size: 20px
+      }
+      .name_input {
+        width: 16rem;
+      }
+      .button {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 2rem 0.5rem 0rem 0.5rem;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: 0.2s;
+      }
+      .submit_button {
+        border-color: #4CAF50;
+        color: green;
+      }
+      .submit_button:hover {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .cancel_button {
+        border-color: #f44336;
+        color: red;
+      }
+      .cancel_button:hover {
+        background-color: #f44336;
+        color: white;
+      }
+      .button:hover {
+        opacity: 1;
+      }
+    </style>
+    <base target="_top">
+  </head>
+  <body>
+    <div>
+      <button class="button submit_button"type="submit" id="saveButton" onclick="submit()" >Submit</button>
+      <button class="button cancel_button" id="cancel" onclick="cancelButton()" >Cancel</button>
+    </div>
+    <select class="input name_input" id="months" ></select>
+    <script>loadMonths();</script>
+    
+    <script>
+      function submit(){
+        let month = document.getElementById("months").value;
+        console.log("Month: " + month);
+        google.script.run.editMonth(month);
+        google.script.host.close();
+      }
+      
+      function cancelButton(){ google.script.host.close(); }
+      
+    </script>
+  </body>
+</html>
+
+
