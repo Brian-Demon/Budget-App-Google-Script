@@ -1,0 +1,3 @@
+function editOctober(){
+  editMonth(oct);
+}
