@@ -1,22 +1,22 @@
 <!DOCTYPE html>
- <script>
-  function loadMonths(){
-    google.script.run.withSuccessHandler(function(arg){
-      let monthSelect = document.getElementById('months');
-      console.log(arg);
-      
-      let option = document.createElement('option');
-      option.value = '';
-      option.text = '-- Select Month --';
-      monthSelect.appendChild(option);
-      
-      arg.forEach(function(item, index){
-        let option = document.createElement('option');
-        option.text = item;
-        monthSelect.appendChild(option);
-      });
-    }).getAvailableMonths();
-  }
+<script>
+ function loadMonths(){
+   google.script.run.withSuccessHandler(function(arg){
+     let monthSelect = document.getElementById("months");
+     console.log(arg);
+     
+     let option = document.createElement("option");
+     option.value = "";
+     option.text = "-- Select Month --";
+     monthSelect.appendChild(option);
+     
+     arg.forEach(function(item, index){
+       let option = document.createElement("option");
+       option.text = item;
+       monthSelect.appendChild(option);
+     });
+   }).getAvailableMonths();
+ }
 </script>
 <html>
   <head>
@@ -69,6 +69,7 @@
   <body>
     <div>
       <button class="button submit_button"type="submit" id="saveButton" onclick="submit()" >Submit</button>
+      
       <button class="button cancel_button" id="cancel" onclick="cancelButton()" >Cancel</button>
     </div>
     <select class="input name_input" id="months" ></select>
