@@ -6,9 +6,17 @@ function test(){
 //  buildBills(sheet, false);
 //  buildAll(sheet);
 //  conditionalFormatting(sheet);
+//  getBudgetRange(sheet);
+//  let results = getBudgetData(mar);
+  
+//  let ui = SpreadsheetApp.getUi();
+//  let form = HtmlService.createHtmlOutputFromFile('0) Test/Test').setTitle('test');
+//  ui.showModalDialog(form, "Test");
+  
+  
 }
 
 // ************************** //
 // ******  TODO NEXT:  ****** //
 // ************************** //
-// get last month quick glance (use HTML tables)
+// previous months in DB show up in menu to edit previous months

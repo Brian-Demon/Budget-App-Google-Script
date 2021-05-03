@@ -31,9 +31,9 @@ const billRemindersString = "Bill Reminders";
 /*************************/
 var prevSheet = [];
 
-/******************************/
-/*** MONTHLY NAME VARIABLES ***/
-/******************************/
+/*************************/
+/*** MONTHLY VARIABLES ***/
+/*************************/
 const currentMonthName = "Current Month";
 const jan = "January";
 const feb = "February";
@@ -49,6 +49,8 @@ const nov = "November";
 const dec = "December";
 const nextYear = "2022";
 const months = [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec, nextYear];
+var monthData = [];
+var monthSummary;
 
 /***************/
 /*** FORMATS ***/

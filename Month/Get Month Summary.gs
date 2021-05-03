@@ -1,0 +1,8 @@
+function getMonthSummary(){
+  //@TODO: set global variable (array) for particular month's budget values
+  
+  // Prompt user for info
+  let ui = SpreadsheetApp.getUi();
+  let monthSummaryForm = HtmlService.createHtmlOutputFromFile('Month/Month Summary').setTitle('Month Summary').setWidth(1200).setHeight(1200);
+  ui.showModalDialog(monthSummaryForm, "Get Month Summary");
+}

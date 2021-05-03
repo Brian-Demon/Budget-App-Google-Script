@@ -6,22 +6,16 @@ function getMonth(sheet){
   
   let lastRow = sheet.getLastRow();
   let lastColumn = sheet.getLastColumn();
-  let month = '';
-  for( let r = 1; r <= lastRow; r++ ){
-    for( let c = 1; c <= lastColumn; c++ ){
-      let value = sheet.getRange(r, c).getValue();
-      if( months.indexOf(value) > -1 ){
-        month = value;
+  let month = "";
+  for( let r = 1; r<= lastRow; r++ ){
+    let data = sheet.getRange(r, 1, 1, lastColumn).getValues().flat();
+    for( let i in data ){
+      let month = data[i];
+      if( months.indexOf(month) > -1 ){
 //        Logger.log('The month for this sheet is: ' + month);
-        break;
+        return month;
       }
     }
   }
-  
-  if( month === '' ){
-    error('No month was found on "' + sheet.getName() + '" --getMonth()');
-    return;
-  } else {
-    return month;
-  }
+  error('No month was found on "' + sheet.getName() + '" --getMonth()');
 }
