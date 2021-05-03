@@ -1,0 +1,3 @@
+function editAugust(){
+  editMonth(Aug);
+}

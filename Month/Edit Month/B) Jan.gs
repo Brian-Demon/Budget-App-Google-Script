@@ -1,0 +1,3 @@
+function editJanuary(){
+  editMonth(jan);
+}

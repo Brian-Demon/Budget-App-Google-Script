@@ -1,0 +1,3 @@
+function editMay() {
+  editMonth(may);
+}
