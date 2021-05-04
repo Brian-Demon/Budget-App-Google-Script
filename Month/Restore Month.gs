@@ -32,12 +32,20 @@ function restoreMonth(month){
   sheet.copyTo(ssData);
   ssData.getSheetByName("Copy of " + month).setName(month).setTabColor(colors.blue);
   ss.deleteSheet(ss.getSheetByName(month));
-  sheet = ssData.getSheetByName(month);
-  sheets = ssData.getSheets();
-  ssData.setActiveSheet(sheet);
-  // SHORT MONTHS IN DB
-  index = months.indexOf(sheet.getName());
-  ssData.moveActiveSheet(index + 4);
+  // SHORT NEWLY STORED MONTH IN DB
+  if(month !== dec){
+    sheet = ssData.getSheetByName(month);
+    sheetNames = [];
+    for( let i in sheets ){
+      sheetNames.push(sheets[i].getName());
+    }
+    ssData.setActiveSheet(sheet);
+    sheets = ssData.getSheets();
+    let nextMonth = months[months.indexOf(month) + 1];
+    index = sheetNames.indexOf(nextMonth) + 1;
+    ssData.moveActiveSheet(index);
+  }
+  
   menu();
   ss.toast('"' + month + '" successfully stored');
   return true;
