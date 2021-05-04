@@ -9,13 +9,13 @@
 function clearRange(sheet, rangeArray){
   // Check if sheet exists
   if( !sheet ){
-    error("Sheet passed does not exist. Please contact support. --clearRange(sheet, rangeArray)");
+    error("Sheet passed does not exist. Please contact support. --clearRange()");
     return;
   }
   // Check if rangeArray is valid
   if( rangeArray.length !== 4 ){
     Logger.log("Length: " + rangeArray.length);
-    error("rangeArray passed is not valid. Please contact support. --clearRange(sheet, rangeArray)");
+    error("rangeArray passed is not valid. Please contact support. --clearRange()");
     return;
   }
   

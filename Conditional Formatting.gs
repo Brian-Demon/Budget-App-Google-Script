@@ -1,7 +1,7 @@
 function conditionalFormatting(sheet){
   // Check if passed sheet exists
   if( !sheet ){
-    error("Sheet passed does not exists. --conditionalFormatting(sheet)");
+    error("Sheet passed does not exists. --conditionalFormatting()");
     return;
   }
   

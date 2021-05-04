@@ -9,7 +9,7 @@ function saveAccount(accountInfo){
   if( !ssDataCheck(ssData) ) return;
   // Check if array passed has nothing in it
   if( accountInfo.length === 0 ){
-    error("accountInfo.length === 0. --saveAccount(accountInfo)");
+    error("accountInfo.length === 0. --saveAccount()");
     return;
   }
   // Check if Acount sheet in ssData exists, if not, create it

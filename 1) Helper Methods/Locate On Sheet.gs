@@ -1,7 +1,7 @@
 function locateOnSheet(sheet, find){
   // Check if sheet passed exists
   if( !sheet ){
-    error("Sheet passed does not exist. --locateOnSheet(sheet,find)");
+    error("Sheet passed does not exist. --locateOnSheet()");
     return;
   }
   
@@ -25,6 +25,6 @@ function locateOnSheet(sheet, find){
     }
   }
   Logger.log('"' + find + '" not found on "' + sheet.getName() + '" sheet');
-  error('"' + find + '" not found on "' + sheet.getName() + '" sheet. --locateOnSheet(sheet,find)');
+  error('"' + find + '" not found on "' + sheet.getName() + '" sheet. --locateOnSheet()');
   return null;
 }

@@ -1,19 +1,19 @@
 function setMonthName(sheet, month){
   // Check if sheet passed exists
   if( !sheet ){
-    error('Sheet passed does not exist. --setMonthName(sheet, month)');
+    error('Sheet passed does not exist. --setMonthName()');
     return;
   }
   
   // Check if month passed exists
   if( months.indexOf(month) === -1 ){
-    error('"' + month + '" is not a valid month. --setMonthName(sheet, month)');
+    error('"' + month + '" is not a valid month. --setMonthName()');
     return;
   }
   
   // Check if sheet is not a default sheet
   if( defaultSheets.indexOf(sheet.getName) > -1 ){
-    error('"' + sheet.getName() + '" is not a valid sheet for this method. --setMonthName(sheet, month)');
+    error('"' + sheet.getName() + '" is not a valid sheet for this method. --setMonthName()');
     return;
   }
   

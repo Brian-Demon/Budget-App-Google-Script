@@ -2,18 +2,18 @@ function storeMonth(month){ // returns true if stored correctly
   let ssData = getSpreadsheetByName(ssID);
   // check to make sure ssData is there
   if ( !ssData ){
-    error('ssData not found in Google Drive. Please contact support. --storeMonth(month)');
+    error('ssData not found in Google Drive. Please contact support. --storeMonth()');
     return false;
   }
   // Check if month passed is valid
   if( months.indexOf(month) === -1 ){
-    error('Invalid month ("' + month + '") passed. --storeMonth(month)');
+    error('Invalid month ("' + month + '") passed. --storeMonth()');
     return false;
   }
   // Check if 'Current Month' sheet is in ss
   let sheet = ss.getSheetByName(currentMonthName);
   if( !sheet ){
-    error("Current Month sheet missing. --storeMonth(month)");
+    error("Current Month sheet missing. --storeMonth()");
     return false;
   }
   // Check if sheet (month) is already stored
@@ -24,7 +24,7 @@ function storeMonth(month){ // returns true if stored correctly
   }
   let index = sheetNames.indexOf(month);
   if( index > -1 ){
-    error('"' + month + '" is already stored. Please contect support. --storeMonth(month)');
+    error('"' + month + '" is already stored. Please contect support. --storeMonth()');
     return false;
   }
   

@@ -1,11 +1,11 @@
 function getBudgetFromSheet(sheet){
   // Check if sheet is valid and not a default sheet
   if( !sheet ){
-    error("Sheet passed does not exist. --getBudgetFromSheet(sheet)");
+    error("Sheet passed does not exist. --getBudgetFromSheet()");
     return;
   }
   if( defaultSheets.indexOf(sheet.getName()) > -1 ){
-    error("Sheet passed is not valid. --getBudgetFromSheet(sheet)");
+    error("Sheet passed is not valid. --getBudgetFromSheet()");
     return;
   }
   
