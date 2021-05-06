@@ -12,11 +12,11 @@ function menu(){
   menu.addSubMenu(SpreadsheetApp.getUi().createMenu('Month Options').addItem('Need More Rows...', 'addRows'));
   menu.addSeparator();
   // Build Edit Previous Month submenu
-  let months = getAvailableMonths();
-  let monthsLength = months.length;
+  let availMonths = getAvailableMonths().sort((a, b) => months.indexOf(a) - months.indexOf(b));
+  let monthsLength = availMonths.length;
   if( monthsLength > 0 ){
     for( let i = 0; i < monthsLength; i++ ){
-      let month = months[i];
+      let month = availMonths[i];
       previousMonthSubMenu.addItem(month, `edit${month}`);
     }
     previousMonthMenu.addSubMenu(previousMonthSubMenu);
