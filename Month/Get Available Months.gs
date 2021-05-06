@@ -2,7 +2,7 @@ function getAvailableMonths(){
   // Check to make sure ssData is there
   let ssData = getSpreadsheetByName(ssID);
   if ( !ssData ){
-    error('ssData not found in Google Drive. Please contact support. --storeMonth(month)');
+    error('ssData not found in Google Drive. Please contact support. --storeMonth()');
     return;
   }
   let sheets = ssData.getSheets();

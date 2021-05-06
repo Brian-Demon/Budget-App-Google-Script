@@ -34,7 +34,6 @@ function buildBills(sheet, buildAll){
   // Set active cell so to not interupt process
   let activeCell = sheet.getRange(1,1);
   sheet.setCurrentCell(activeCell);
-  // LOAD <--------------------------------------- LOAD
   let bills = getBills();
   let numberOfRows = bills.length;
   let maxRows = sheet.getMaxRows();

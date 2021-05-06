@@ -6,7 +6,7 @@ function buildBudget(sheet, buildAll){
   }
   // Check if passed sheet exists
   if( !sheet ){
-    error("Sheet passed does not exists. --buildBudget(sheet, buildAll)");
+    error("Sheet passed does not exists. --buildBudget()");
     return;
   }
   
@@ -24,7 +24,7 @@ function buildBudget(sheet, buildAll){
   }
   // Check if sheet passed has a budget section
   if( startRow === 0 ){
-    error("The sheet passed does not have a budget section. --buildBudget(sheet, buildAll)");
+    error("The sheet passed does not have a budget section. --buildBudget()");
     return;
   }
   
@@ -77,13 +77,13 @@ function buildBudget(sheet, buildAll){
     let prevMonthSheet = ssData.getSheetByName(prevMonth);
     // Check if prevMonthSheet exists in ssData
     if(!prevMonthSheet ){
-      error('"' + prevMonth + '" sheet does not exist in database. Please contact support. --buildBudget(sheet, buildAll)');
+      error('"' + prevMonth + '" sheet does not exist in database. Please contact support. --buildBudget()');
       return;
     }
     // Get last month's budget
     let lastMonthBudget = getBudgetFromSheet(prevMonthSheet);
     if( lastMonthBudget.length === 0 ){
-      error("lastMonthBudget.length === 0. -- buildBudget(sheet)");
+      error("lastMonthBudget.length === 0. -- buildBudget()");
       return;
     }
     // Compare and set amounts found in last month's budget for this month (sheet passed month)

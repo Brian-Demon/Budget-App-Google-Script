@@ -6,7 +6,7 @@ function buildTracker( sheet, tracker, buildAll ){
   }
   // Check if passed sheet exists
   if( !sheet ){
-    error("Sheet passed does not exists. --buildTracker(sheet, tracker, buildAll)");
+    error("Sheet passed does not exists. --buildTracker()");
     return;
   }
   
@@ -22,7 +22,7 @@ function buildTracker( sheet, tracker, buildAll ){
     startColumn = 13;
     sectionColor = colors.lightGreen3;
   } else {
-    error('Tracker passed is not valid. "' + expenseTrackerString + '" or "' + incomeTrackerString + '" are the only valid options. --buildTracker(sheet, tracker, buildAll)');
+    error('Tracker passed is not valid. "' + expenseTrackerString + '" or "' + incomeTrackerString + '" are the only valid options. --buildTracker()');
     return;
   }
   let numberOfColumns = 4;
@@ -54,7 +54,7 @@ function buildTracker( sheet, tracker, buildAll ){
 //  Logger.log("startRow: " + startRow + ", lastRow: " + lastRow);
 
   if( startRow === 0 ){
-    error('The sheet passed is invalid. --buildTracker(sheet, tracker)');
+    error('The sheet passed is invalid. --buildTracker()');
     return;
   }
   
@@ -63,7 +63,6 @@ function buildTracker( sheet, tracker, buildAll ){
   //*******************************//
   let activeCell = sheet.getRange(1,1);
   sheet.setCurrentCell(activeCell);
-  // LOAD <--------------------------------------- LOAD
   // CLEAR CURRENT TRACKER
   let numberOfRows = lastRow - startRow + 1;
 //  Logger.log("numberOfRows: " + numberOfRows);
@@ -83,7 +82,7 @@ function buildTracker( sheet, tracker, buildAll ){
     let incomeSources = getIncomeSources();
     valuesRange = getIncomeRange();
   } else {
-    error("Invalid tracker passed after clear then re-build sectiion. --buildTracker(sheet, tracker)");
+    error("Invalid tracker passed after clear then re-build sectiion. --buildTracker()");
     return;
   }
   let rule = SpreadsheetApp.newDataValidation().requireValueInRange(valuesRange).setAllowInvalid(false).build();
@@ -102,7 +101,7 @@ function buildTracker( sheet, tracker, buildAll ){
   } else if( tracker === incomeTrackerString ){
     sheet.getRange(startRow - 3, startColumn + 3).setValue("=SUM(P" + startRow + ":P" + lastRow + ")");
   } else {
-    error("Invalid tracker passed after clear then re-build sectiion. --buildTracker(sheet, tracker)");
+    error("Invalid tracker passed after clear then re-build sectiion. --buildTracker()");
     return;
   }
   

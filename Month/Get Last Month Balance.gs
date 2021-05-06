@@ -6,7 +6,7 @@ function getLastMonthBalance(currentMonth){
   }
   // Check to make sure currentMonth is not January and therefor no previous month balance
   if( currentMonth === jan ){
-    Logger.log('Somehow jan was passed to "getLastMonthBalance(currentMonth)", check the validation in buildBudget(sheet, buildAll)');
+    Logger.log('Somehow jan was passed to "--getLastMonthBalance()", check the validation in --buildBudget()');
     return 0;
   }
   
@@ -15,7 +15,7 @@ function getLastMonthBalance(currentMonth){
   let sheet = ssData.getSheetByName(prevMonth);
   // Check to make sure previous month exists in ssData
   if( !sheet ){
-    error('"' + prevMonth + '" does not exist in the database. Please contact support. --getLastMonthBalance(currentMonth)');
+    error('"' + prevMonth + '" does not exist in the database. Please contact support. --getLastMonthBalance()');
     return;
   }
   

@@ -1,7 +1,7 @@
 function createTemplate(spreadsheet){
   // check to make sure ssData is there
   if ( !spreadsheet ){
-    error('spreadsheet not found in Google Drive. Please contact support. --createTemplate(spreadsheet)');
+    error('spreadsheet not found in Google Drive. Please contact support. --createTemplate()');
     return;
   }
   

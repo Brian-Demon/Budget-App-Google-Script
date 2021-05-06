@@ -14,7 +14,7 @@ function rowInBounds(sheet, currentRow, typeOfAction) {
   } else if( sheet.getName() === incomeSheetName ) {
     column = 3;
   } else {
-    error("Column is set to 0 due to wrong sheet name. --rowInBounds(sheet, currentRow, typeOfAction)");
+    error("Column is set to 0 due to wrong sheet name. --rowInBounds()");
     return;
   }
   //  Logger.log("Last Row: " + lastRow);

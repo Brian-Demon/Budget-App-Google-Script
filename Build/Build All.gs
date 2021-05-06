@@ -1,7 +1,7 @@
 function buildAll(sheet){
   // Check if passed sheet exists
   if( !sheet ){
-    error("Sheet passed does not exists. --buildAll(sheet)");
+    error("Sheet passed does not exists. --buildAll()");
     return;
   }
   

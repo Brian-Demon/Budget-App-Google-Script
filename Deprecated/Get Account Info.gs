@@ -7,7 +7,7 @@ function getAccountInfo(toCheck){
   // Set sheet to Account Sheet
   let sheet = ss.getSheetByName(accountSheetName);
   if( !sheet){
-    error("Account sheet is missing. Please contact support. --getAccountInfo(toCheck)");
+    error("Account sheet is missing. Please contact support. --getAccountInfo()");
     return;
   }
   
@@ -20,7 +20,7 @@ function getAccountInfo(toCheck){
       return data[i + 1];
     }
   }
-  error('"' + toCheck + '" not found on the account sheet. Please contact support. --getAccountInfo(toCheck)');
+  error('"' + toCheck + '" not found on the account sheet. Please contact support. --getAccountInfo()');
   return;
 }
 */

@@ -1,7 +1,7 @@
 function updateDataValidation(sheet, valuesRange, range){
   // Check if passed sheet exists
   if( !sheet ){
-    error("Sheet passed does not exists. --updateDataValidation(sheet, valuesRange, range)");
+    error("Sheet passed does not exists. --updateDataValidation()");
     return;
   }
   

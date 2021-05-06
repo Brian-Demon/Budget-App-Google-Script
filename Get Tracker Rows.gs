@@ -1,12 +1,12 @@
 function getTrackerRows(sheet, section){
   // Check if sheet passed is valid 
   if( !sheet || defaultSheets.indexOf(sheet.getName()) > -1 ){
-    error("Invalid sheet passed. --getTrackerRows(sheet, section)");
+    error("Invalid sheet passed. --getTrackerRows()");
     return;
   }
   // Check if section passed is valid
   if( section !== expenseTrackerString && section !== incomeTrackerString ){
-    error('Invalid section, "' + section + '" passed. --getTrackerRows(sheet, section)');
+    error('Invalid section, "' + section + '" passed. --getTrackerRows()');
     return;
   }
   
@@ -27,7 +27,7 @@ function getTrackerRows(sheet, section){
 //  Logger.log("Column: " + column);
   // Check if column and startRow were set
   if( column === 0 || startRow === 0 ){
-    error('"' + section + '" not found on sheet passed. --getTrackerRows(sheet, section)');
+    error('"' + section + '" not found on sheet passed. --getTrackerRows()');
     return;
   }
   // Find the number of rows

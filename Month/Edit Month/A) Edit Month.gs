@@ -7,7 +7,7 @@ function editMonth(month){
   // Check to make sure month exists in ssData
   let sheet = ssData.getSheetByName(month);
   if( !sheet ){
-    error('"' + month + '" does not exist in the database. Please contact support. --getLastMonthBalance(currentMonth)');
+    error('"' + month + '" does not exist in the database. Please contact support. --getLastMonthBalance()');
     return;
   }
   
@@ -15,5 +15,6 @@ function editMonth(month){
   sheet.copyTo(ss);
   ssData.deleteSheet(sheet);
   ss.getSheetByName("Copy of " + month).setName(month);
+  menu();
   setActiveSheet(month);
 }
