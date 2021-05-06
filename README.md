@@ -2,8 +2,6 @@
 
 ## Instalation
 - A Google account is required
-- Visit (
-- 
 ## Usage & Features
 A comprehensive budgeting spreadhseet app that allows the user to keep track of personal finanses.
 1) Set up a budget each month and change anything on it month to month.
