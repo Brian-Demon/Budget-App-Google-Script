@@ -45,6 +45,8 @@ function menu(){
   menu.addSeparator();
   menu.addSeparator();
   menu.addSubMenu(SpreadsheetApp.getUi().createMenu('Help')
+              .addItem('Tutortial', 'tutorial')
+              .addSeparator()
               .addItem('Contacts', 'contacts')
              );
   menu.addToUi();
