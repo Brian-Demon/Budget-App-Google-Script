@@ -26,12 +26,14 @@ function getBudgetFromSheet(sheet){
   for( let r = row; r <= lastRow; r++ ){
     let name = sheet.getRange(r, 2).getValue();
     let amount = sheet.getRange(r, 3).getValue();
+    let thisMonthAmount = sheet.getRange(r, 5).getValue();
     if( name === "TOTALS:" ){
       break;
     }
     let info = {
       name: name,
-      amount: amount
+      amount: amount,
+      thisMonthAmount: thisMonthAmount
     }
     budget.push(info);
   }
