@@ -100,7 +100,7 @@ function buildBudget(sheet, buildAll){
       }
 //      Logger.log("Row: " + r + ", Value: " + value + ", Index: " + index);
       if( index > -1 ){
-        sheet.getRange(r, 4).setValue(lastMonthBudget[index].amount);
+        sheet.getRange(r, 4).setValue(lastMonthBudget[index].thisMonthAmount);
       }
     }
     sheet.getRange(endRow + 1, 4).setValue("=SUM(D" + startRow + ":D" + endRow + ")");
