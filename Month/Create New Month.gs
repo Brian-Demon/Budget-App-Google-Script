@@ -56,10 +56,9 @@ function createNewMonth(){
     // Freeze rows up to startRow - 2;
     let startRow = getStartRow(sheet);
     sheet.setFrozenRows(startRow - 2);
-    // STOP LOADING
-    stopLoading();
-  } else {
-    // STOP LOADING
-    stopLoading();
   }
+  // REBUILD MENU
+  menu();
+  // STOP LOADING
+  stopLoading();
 }

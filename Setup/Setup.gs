@@ -32,6 +32,25 @@ function setup(){
   ssData.insertSheet(incomeSheetName, defaultSheets.indexOf(incomeSheetName));
   ssData.getSheetByName(incomeSheetName).setTabColor(colors.green);
   
+  // Create onOpen trigger if not already created
+  let triggers = ScriptApp.getProjectTriggers();
+  let triggerNames = [];
+  for( let i in triggers ){
+    triggerNames.push(triggers[i].getHandlerFunction());
+  }
+  if( triggerNames.indexOf("onOpen") === -1 ){
+    ScriptApp.newTrigger("onOpen")
+    .forSpreadsheet(SpreadsheetApp.getActive())
+    .onOpen()
+    .create();
+  }
+  
+  // Create Budget Menu
+  menu();
+  
+  // Display beggining steps modal for user
+  tutorial();
+  
   // Delete WELCOME sheet
   ss.toast("REMINDER: DELETE WELCOME SHEET IN CODE (un-comment");
 //  ss.deleteSheet(ss.getSheetByName("WELCOME"));
