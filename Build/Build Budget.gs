@@ -113,13 +113,17 @@ function buildBudget(sheet, buildAll){
   let expenseLastRow = startRow + expenseRows - 1;
 //  Logger.log("Tracker Rows: " + trackerRows);
   sheet.getRange(startRow, 5).setValue("=sumif($H$" + startRow + ":$K$" + expenseLastRow + ",$B" + startRow + ",$K$" + startRow + ":$K$" + expenseLastRow + ")");
-  sheet.getRange(startRow, 5).copyTo(sheet.getRange(startRow + 1, 5, numberOfRows - 1, 1));
+  if( numberOfRows > 1 ){
+    sheet.getRange(startRow, 5).copyTo(sheet.getRange(startRow + 1, 5, numberOfRows - 1, 1));
+  }
   sheet.getRange(endRow + 1, 5).setValue("=SUM(E" + startRow + ":E" + endRow + ")");
   //******************************//
   // Set FIFTH ("Balance") column //
   //******************************//
   sheet.getRange(startRow, 6).setValue("=$C" + startRow + "-$E" + startRow);
-  sheet.getRange(startRow, 6).copyTo(sheet.getRange(startRow + 1, 6, numberOfRows - 1, 1));
+  if( numberOfRows > 1 ){
+    sheet.getRange(startRow, 6).copyTo(sheet.getRange(startRow + 1, 6, numberOfRows - 1, 1));
+  }
   sheet.getRange(endRow + 1, 6).setValue("=SUM(F" + startRow + ":F" + endRow + ")");
   //*********************************************//
   // Set Last Month / Current Month Balance Rows //
