@@ -53,45 +53,47 @@ function conditionalFormatting(sheet){
   //* BILLS SECTIONS *//
   //******************//
   // Paid? Column
-  range = sheet.getRange(startRow, 19, bills.length, 1);
-  var paid = SpreadsheetApp.newConditionalFormatRule()
+  if( bills.length > 0 ){
+    range = sheet.getRange(startRow, 19, bills.length, 1);
+    var paid = SpreadsheetApp.newConditionalFormatRule()
     .whenTextEqualTo("PAID")
     .setBackground(colors.lightGreen2)
     .setRanges([range])
     .build();
-  rules.push(paid);
-  var notPaid = SpreadsheetApp.newConditionalFormatRule()
+    rules.push(paid);
+    var notPaid = SpreadsheetApp.newConditionalFormatRule()
     .whenTextEqualTo("NOT PAID")
     .setBackground(colors.lightRed2)
     .setRanges([range])
     .build();
-  rules.push(notPaid);
-  var partial = SpreadsheetApp.newConditionalFormatRule()
+    rules.push(notPaid);
+    var partial = SpreadsheetApp.newConditionalFormatRule()
     .whenTextEqualTo("PARTIAL")
     .setBackground(colors.lightBlue2)
     .setRanges([range])
     .build();
-  rules.push(partial);
-  // Difference Column
-  range = sheet.getRange(startRow, 22, bills.length, 1);
-  let lessThanBills = SpreadsheetApp.newConditionalFormatRule()
+    rules.push(partial);
+    // Difference Column
+    range = sheet.getRange(startRow, 22, bills.length, 1);
+    let lessThanBills = SpreadsheetApp.newConditionalFormatRule()
     .whenNumberLessThan(0)
     .setBackground(colors.lightRed2)
     .setRanges([range])
     .build();
-  rules.push(lessThanBills);
-  let greaterThanBills = SpreadsheetApp.newConditionalFormatRule()
+    rules.push(lessThanBills);
+    let greaterThanBills = SpreadsheetApp.newConditionalFormatRule()
     .whenNumberGreaterThan(0)
     .setBackground(colors.lightGreen2)
     .setRanges([range])
     .build();
-  rules.push(greaterThanBills);
-  let equalsBills = SpreadsheetApp.newConditionalFormatRule()
+    rules.push(greaterThanBills);
+    let equalsBills = SpreadsheetApp.newConditionalFormatRule()
     .whenNumberEqualTo(0)
     .setBackground(colors.lightBlue2)
     .setRanges([range])
     .build();
-  rules.push(equalsBills);
+    rules.push(equalsBills);
+  }
   
   // SET ALL CONDITIONAL FORMATTING
   sheet.setConditionalFormatRules(rules);
