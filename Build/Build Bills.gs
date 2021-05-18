@@ -35,7 +35,6 @@ function buildBills(sheet, buildAll){
   let activeCell = sheet.getRange(1,1);
   sheet.setCurrentCell(activeCell);
   let bills = getBills();
-  Logger.log(bills.toString());
   let numberOfRows = bills.length;
   let maxRows = sheet.getMaxRows();
   let rangeArray = [ startRow, 18, (maxRows - startRow), 5 ];
