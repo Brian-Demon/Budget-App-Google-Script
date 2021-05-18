@@ -56,7 +56,7 @@ function buildBills(sheet, buildAll){
   sheet.getRange(startRow, 20, numberOfRows, 3).setHorizontalAlignment("right").setNumberFormat(currencyFormat);;
   // Set "Paid?" column cell formulas
   let expenseTrackerRows = getTrackerRows(sheet, expenseTrackerString) + startRow - 1;
-  sheet.getRange(startRow, 19).setValue('=IF($T' + startRow + ' = 0, "NOT PAID",IF($T' + startRow + ' < $U' + startRow + ', "PARTIAL", "PAID"))');
+  sheet.getRange(startRow, 19).setValue('=IF($U' + startRow + ' = 0, "PAID", IF($T' + startRow + ' = 0, "NOT PAID",IF($T' + startRow + ' < $U' + startRow + ', "PARTIAL", "PAID")))');
   if( numberOfRows > 1 ){
     sheet.getRange(startRow, 19).copyTo(sheet.getRange(startRow + 1, 19, numberOfRows - 1, 1));
   }
