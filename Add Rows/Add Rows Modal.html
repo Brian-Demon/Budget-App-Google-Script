@@ -136,6 +136,7 @@
         let tracker = document.querySelector('input[type="radio"]:checked').value;
 //        console.log("Rows: " + rows);
 //        console.log("Tracker: " + tracker);
+        google.script.run.loading2();
         google.script.run.addRowsTo(tracker, rows);
         google.script.host.close();
       }

@@ -1,6 +1,6 @@
 function loading(){
   let ui = SpreadsheetApp.getUi();
-  var loading = HtmlService.createHtmlOutputFromFile('Loading/Loading').setTitle('LOADING...');
+  let loading = HtmlService.createHtmlOutputFromFile('Loading/Loading').setTitle('LOADING...');
   
   // Check if loading sheet exists, if it does delete and re-make it
   let activeSheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -11,10 +11,10 @@ function loading(){
     ss.insertSheet("Loading", 0);
     sheet = ss.getSheetByName("Loading");
   }
-  sheet.setTabColor(colors.black).setHiddenGridlines(true);;
+  sheet.setTabColor(colors.black).setHiddenGridlines(true);
   sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).setBackground(colors.black);
   
-  // Use three different god damn methods to set active sheet to the newly created "Loading" sheet
+  // Use three different ***-**** methods to set active sheet to the newly created "Loading" sheet
   // 1)
   setActiveSheet("Loading");
   // 2)

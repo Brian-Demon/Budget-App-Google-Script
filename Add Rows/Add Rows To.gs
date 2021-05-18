@@ -1,7 +1,7 @@
 function addRowsTo(tracker, rows){
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  Logger.log(sheet.getName());
-  console.log(sheet.getName());
+//  Logger.log(sheet.getName());
+//  console.log(sheet.getName());
   let column;
   let valuesRange;
   let startRow = getStartRow(sheet);
@@ -21,4 +21,5 @@ function addRowsTo(tracker, rows){
   let range = sheet.getRange(row, column, rows, 1);
   sheet.getRange(row, column, rows, 4).setBackground(sectionColor).setBorder(true, true, true, true, true, true, "black", solid);
   setDataValidation(sheet, rule, range);
+  closeHTMLBox();
 }
