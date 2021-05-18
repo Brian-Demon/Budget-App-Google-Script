@@ -52,6 +52,5 @@ function setup(){
   tutorial();
   
   // Delete WELCOME sheet
-  ss.toast("REMINDER: DELETE WELCOME SHEET IN CODE (un-comment");
-//  ss.deleteSheet(ss.getSheetByName("WELCOME"));
+  ss.deleteSheet(ss.getSheetByName("WELCOME"));
 }
