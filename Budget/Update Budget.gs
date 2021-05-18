@@ -8,7 +8,6 @@ function updateBudget(){
   
   let sheet = ssData.getSheetByName(budgetSheetName);
   if( !sheet ){
-    let sheets = ssData.getSheets();
     ssData.insertSheet(budgetSheetName, defaultSheets.indexOf(budgetSheetName)).setTabColor(colors.red);
     sheet = ssData.getSheetByName(budgetSheetName);
   }
@@ -16,16 +15,11 @@ function updateBudget(){
   // STORE IN DATABASE
   let oldBudget = getBudgetFromDatabase();
   let oldBills = getBillsFromBudget(oldBudget);
-//  Logger.log(didBillsChange(oldBills, bills));
   // Check if the user wants to update the "Current Month" budget section in addition to in the database
   let ui = SpreadsheetApp.getUi();
   let response = ui.alert("Update Current Month?", "Are you sure you want to update the budget?\n", ui.ButtonSet.YES_NO);
-  Logger.log("BEFORE");
   if( response === ui.Button.YES ){
-    //@TODO: NOT WORKING
     loading();
-    Logger.log(response);
-    Logger.log("AFTER");
     sheet.clear();
     for( let i = 0; i < budget.length; i++ ){
       sheet.getRange(i + 1, 1).setValue(budget[i].name);
