@@ -1,6 +1,6 @@
 # Budget-App-Google-Script
 
-## Instalation
+## Setup
 - A Google account is required
 ## Usage & Features
 A comprehensive budgeting spreadhseet app that allows the user to keep track of personal finanses.
