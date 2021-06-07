@@ -1,7 +1,11 @@
 # Budget-App-Google-Script
 
-## Setup
-- A Google account is required
+## Required files:
+Make a copy of the following Spreadsheet: https://docs.google.com/spreadsheets/d/1ydS9PzJAyPaW_OC2Et0n4WPHwPu2pKRqOHwVp8lbgOs/
+
+## Google Apps GitHub Assistant:
+Add Google Apps Script GitHub Assistant (https://chrome.google.com/webstore/detail/google-apps-script-github/lfjcgcmkmjjlieihflfhjopckgpelofo/related) to gain access to GitHub functionalty
+
 ## Usage & Features
 A comprehensive budgeting spreadhseet app that allows the user to keep track of personal finanses.
 1) Set up a budget each month and change anything on it month to month.
