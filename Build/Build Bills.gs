@@ -62,7 +62,7 @@ function buildBills(sheet, buildAll){
     sheet.getRange(startRow, startColumn + 1).copyTo(sheet.getRange(startRow + 1, startColumn + 1, numberOfRows - 1, 1));
   }
   // Set "Paid Amount" column cell formulas
-  sheet.getRange(startRow, startColumn + 2).setValue('=SUMIF(H$' + startRow + ':L$' + expenseTrackerRows + ', $S' + startRow + ', L$' + startRow + ':L$' + expenseTrackerRows + ')');
+  sheet.getRange(startRow, startColumn + 2).setValue('=SUMIF(H$' + startRow + ':L$' + expenseTrackerRows + ', $T' + startRow + ', L$' + startRow + ':L$' + expenseTrackerRows + ')');
   if( numberOfRows > 1 ){
     sheet.getRange(startRow, startColumn + 2).copyTo(sheet.getRange(startRow + 1, startColumn + 2, numberOfRows - 1, 1));
   }
