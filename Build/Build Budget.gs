@@ -16,7 +16,7 @@ function buildBudget(sheet, buildAll){
   // Find starting row (at "B" Column where "Line Item" is located) + 2
   for( let r = 1; r <= lastRow; r++ ){
     let value = sheet.getRange(r, 2).getValue();
-//    Logger.log("Row: " + r + ", Value: " + value);
+  //  Logger.log("Row: " + r + ", Value: " + value);
     if( value === "Line Item" ){
       startRow = r + 2;
       break;
@@ -125,29 +125,98 @@ function buildBudget(sheet, buildAll){
     sheet.getRange(startRow, 6).copyTo(sheet.getRange(startRow + 1, 6, numberOfRows - 1, 1));
   }
   sheet.getRange(endRow + 1, 6).setValue("=SUM(F" + startRow + ":F" + endRow + ")");
-  //*********************************************//
-  // Set Last Month / Current Month Balance Rows //
-  //*********************************************//
-  let lastMonthBalance = 0;
-  let prevMonthRow = endRow + 3;
-  let currentMonthRow = prevMonthRow + 1;
+  //*************************//
+  //* BUILD SUMMARY SECTION *//
+  //*************************//
+  let accounts = getAccountsSources();
+  let numberOfAccounts = accounts.length;
+  let accountNameColumn = 3;
+  let accountAmountColumn = 6;
+  let balanceRow = endRow + 3;
   if( month !== jan ){
     lastMonthBalance = getLastMonthBalance(month);
   }
-  sheet.getRange(prevMonthRow, 3, 1, 3).mergeAcross();
-  sheet.getRange(currentMonthRow, 3, 1, 3).mergeAcross();
-  sheet.getRange(prevMonthRow, 3, 1, 4).setBackground(colors.darkGray3);
-  sheet.getRange(currentMonthRow, 3, 1, 4).setBackground(colors.darkPurple2);
-  sheet.getRange(prevMonthRow, 3).setValue("Last Month Ending Balance:").setHorizontalAlignment("right").setFontWeight("bold").setFontColor(colors.white);
-  sheet.getRange(currentMonthRow, 3).setValue("BALANCE:").setHorizontalAlignment("right").setFontWeight("bold").setFontColor(colors.white);
-  sheet.getRange(prevMonthRow, 6).setValue(lastMonthBalance).setHorizontalAlignment("right").setFontWeight("bold").setFontColor(colors.white).setNumberFormat(currencyFormat);
-  sheet.getRange(currentMonthRow, 6).setValue("=F" + prevMonthRow + "-K" + (startRow - 3) + "+P" + (startRow - 3)).setHorizontalAlignment("right").setFontWeight("bold").setFontColor(colors.white).setNumberFormat(currencyFormat);
-  sheet.getRange(prevMonthRow, 3, 2, 4).setBorder(true, true, true, true, true, true, "black", solidMedium);
+  let lastMonthSheet = getLastMonthSheet(month);
+  let lastMonthAccountsAndBalances = getLastMonthAccountsAndBalances(lastMonthSheet);
+  // let numberOfAccountsLastMonth = Object.keys(lastMonthAccountsAndBalances).length;
+  let numberOfAccountsLastMonth = lastMonthAccountsAndBalances.length;
+  // Rows
+  let lastMonthEndingBalanceRow = balanceRow + 1;
+  let thisMonthBalanceStartRow = lastMonthEndingBalanceRow + 2;
+  let lastMonthBalanceStartRow = thisMonthBalanceStartRow + numberOfAccounts + 1;
+
+  // Clear the summary area
+  let maxRow = sheet.getMaxRows();
+  sheet.getRange(balanceRow, 3, maxRow, 4).clear();
+
+  // BALANCE SECTION
+  sheet.getRange(balanceRow, 3, 1, 3).mergeAcross();
+  sheet.getRange(balanceRow, 3, 1, 4).setBackground(colors.darkPurple2);
+  sheet.getRange(balanceRow, 3).setValue("BALANCE:").setHorizontalAlignment("right");
+  let finalTotalFormula = `=SUM(F${thisMonthBalanceStartRow + 1}:F${thisMonthBalanceStartRow + numberOfAccounts})`;
+  sheet.getRange(balanceRow, 6).setHorizontalAlignment("right").setValue(finalTotalFormula).setNumberFormat(currencyFormat);
+  // Last Month Ending Balance Section
+  sheet.getRange(lastMonthEndingBalanceRow, 3, 1, 3).mergeAcross().setHorizontalAlignment("center");
+  sheet.getRange(lastMonthEndingBalanceRow, 3, 1, 4).setBackground(colors.darkGray3);
+  sheet.getRange(lastMonthEndingBalanceRow, 3).setValue("Last Month Ending Balance:").setHorizontalAlignment("right");
+  sheet.getRange(lastMonthEndingBalanceRow, 6).setHorizontalAlignment("right").setValue(lastMonthBalance).setNumberFormat(currencyFormat);
+  // Set border, font weight, and font color for BALANCE and Last Month Ending Balance Section
+  sheet.getRange(balanceRow, 3, lastMonthEndingBalanceRow - balanceRow + 1, 4).setBorder(true, true, true, true, true, true, "black", solidMedium).setFontWeight("bold").setFontColor(colors.white);
+
+  // THIS MONTH SECTION
+  // This Month Balance Section
+  sheet.getRange(thisMonthBalanceStartRow, 3, 1, 4).mergeAcross().setValue("This Month Balance Per Account:").setHorizontalAlignment("center");
+  sheet.getRange(thisMonthBalanceStartRow, 3, numberOfAccounts + 1, 4).setBackground(colors.lightGreen2).setFontColor(colors.black);
+  for( let row = thisMonthBalanceStartRow + 1; row < thisMonthBalanceStartRow + numberOfAccounts + 1; row++){
+    let account = accounts[row - thisMonthBalanceStartRow - 1];
+    sheet.getRange(row, accountNameColumn, 1, 3).mergeAcross();
+    sheet.getRange(row, accountNameColumn).setValue(account).setHorizontalAlignment("right");
+  }
+  sheet.getRange(thisMonthBalanceStartRow, 3, (numberOfAccounts + 1), 4).setBorder(true, true, true, true, true, true, "black", solidMedium).setFontWeight("bold").setFontColor(colors.black);
+
+  // LAST MONTH SECTION
+  // Last Month Income Per Account Section
+  sheet.getRange(lastMonthBalanceStartRow, 3, 1, 4).mergeAcross().setValue("Last Month Balance Per Account:").setHorizontalAlignment("center");
+  sheet.getRange(lastMonthBalanceStartRow, 3, numberOfAccountsLastMonth + 1, 4).setBackground(colors.lightCornflowerBlue2)
+  for( let row = lastMonthBalanceStartRow + 1; row < lastMonthBalanceStartRow + numberOfAccountsLastMonth + 1; row++){
+    let index = row - lastMonthBalanceStartRow - 1;
+    sheet.getRange(row, accountNameColumn, 1, 3).mergeAcross();
+    sheet.getRange(row, accountNameColumn).setValue(lastMonthAccountsAndBalances[index][0]).setHorizontalAlignment("right");
+    sheet.getRange(row, accountAmountColumn).setValue(lastMonthAccountsAndBalances[index][1]).setNumberFormat(currencyFormat);
+  }
+
+  // SET THIS MONTH BALANCES PER ACCOUNT DEPENDING IF THAT ACCOUNT EXISTED LAST MONTH
+  for( let i = 0; i < accounts.length; i++ ){
+    let accountToFind = accounts[i];
+    let row = getRowByColumnAndValue(sheet, 3, accountToFind, lastMonthBalanceStartRow + 1);
+    let formula = '0';
+    let numberOfTrackingRows = defaultNumberOfTrackerRows + startRow - 1;
+    if( row != null ){
+      formula = `=SUMIF(P\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, R\$${startRow}:R\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:L\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, L\$${startRow}:L\$${numberOfTrackingRows})+F${row}`;
+    } else {
+      formula = `=SUMIF(P\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, R\$${startRow}:R\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:L\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, L\$${startRow}:L\$${numberOfTrackingRows})`;
+    }
+    sheet.getRange(thisMonthBalanceStartRow + i + 1, 6).setValue(formula);
+  }
+
+  // Set border, font weight, and font color for This Month Income & Expenses Section
+  sheet.getRange(lastMonthBalanceStartRow, 3, (numberOfAccountsLastMonth + 1), 4).setBorder(true, true, true, true, true, true, "black", solidMedium).setFontWeight("bold").setFontColor(colors.black);
   //****************************************//
   // Update Expense Tracker Data Validation //
   //****************************************//
+  let expenseStartColumn = 8;
+  let incomeStartColumn = expenseStartColumn + 6;
+  // Update Category Data
   let valuesRange = sheet.getRange(startRow, 2, budget.length, 1);
-  let range = sheet.getRange(startRow, 8, 50, 1);
+  let range = sheet.getRange(startRow, expenseStartColumn, 50, 1);
+  updateDataValidation(sheet, valuesRange, range);
+  // Update Account Data for Expense Tracker
+  valuesRange = sheet.getRange(thisMonthBalanceStartRow + 1, 3, numberOfAccounts, 1);
+  range = sheet.getRange(startRow, expenseStartColumn + 2, 1);
+  updateDataValidation(sheet, valuesRange, range);
+  // Update Account Data for Income Tracker
+  valuesRange = sheet.getRange(thisMonthBalanceStartRow + 1, 3, numberOfAccounts, 1);
+  range = sheet.getRange(startRow, incomeStartColumn + 2, 1);
   updateDataValidation(sheet, valuesRange, range);
   //***********************************//
   // Set Budget Conditional Formatting //

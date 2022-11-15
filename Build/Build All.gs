@@ -10,5 +10,5 @@ function buildAll(sheet){
   buildTracker(sheet, expenseTrackerString, true);
   buildTracker(sheet, incomeTrackerString, true);
   buildBills(sheet, true);
-  conditionalFormatting(sheet)
+  conditionalFormatting(sheet);
 }

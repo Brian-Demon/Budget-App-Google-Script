@@ -19,11 +19,11 @@ function updateIncome(){
   
   // Find the Income Tracker section's range for the first, "Source" column and update the data validation for the dropdowns
   sheet = ss.getSheetByName(currentMonthName);
-  let budget = getBudgetFromSheet(sheet);
   let lastRow = sheet.getLastRow();
   let startRow = 0;
   for( let r = 1; r <= lastRow; r++ ){
-    let value = sheet.getRange(r, 18).getValue();
+    let value = sheet.getRange(r, 20).getValue();
+    // Logger.log(`Value at r:${r}/c:${20} = ${value}`);
     if( value === "Bill Reminders" ){
       startRow = r + 3;
       break;
@@ -31,7 +31,6 @@ function updateIncome(){
   }
   let numberOfRows = getTrackerRows(sheet, incomeTrackerString);
   let valuesRange = getIncomeRange();
-  let rule = SpreadsheetApp.newDataValidation().requireValueInRange(valuesRange).setAllowInvalid(false).build();
   let range = sheet.getRange(startRow, 13, numberOfRows, 1);
   // UPDATE DATA VALIDATION
   updateDataValidation(sheet, valuesRange, range);

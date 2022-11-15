@@ -2,14 +2,14 @@ function getIncomeRange(){
   // Check if income sheet exists
   let sheet = ss.getSheetByName(incomeSheetName);
   if( !sheet ){
-    error("Income Sheet is missing. Please contact support. --getIncomeSources()");
+    error("Income Sheet is missing. Please contact support. --getIncomeRange()");
     return;
   }
   
   // Find start location of where the income source list (column) starts
   let incomeLocation = locateOnSheet(sheet, "Income Sources");
   if( !incomeLocation ){
-    error('Could not locate "Income Sources" on "Income" sheet. --getIncomeSources()');
+    error('Could not locate "Income Sources" on "Income" sheet. --getIncomeRange()');
     return;
   }
   let startRow = incomeLocation.row + 2;
@@ -20,7 +20,7 @@ function getIncomeRange(){
   for( let r = startRow; r <= lastRow; r++ ){
     let value = sheet.getRange(r, column).getValue();
     let color = sheet.getRange(r, column).getBackground();
-//    Logger.log("Row: " + r + ", Value: " + value + ", Color: " + color + "darkGray4: " + colors.darkGray4);
+   Logger.log("Row: " + r + ", Value: " + value + ", Color: " + color + "darkGray4: " + colors.darkGray4);
     if( color !== colors.darkGray4 ){
       endRow = r - 1;
       break;

@@ -27,9 +27,9 @@ function getData( sheet = ss.getActiveSheet(), withCoordinates = false ){ // RET
     }
   }
   
-//  for( let i = 0; i < data.length; i++ ){
-//    Logger.log('i: ' + i + ' = ' + data[i]);
-//  }
+ for( let i = 0; i < data.length; i++ ){
+   Logger.log('i: ' + i + ' = ' + data[i]);
+ }
   
   return data;
 }

@@ -9,6 +9,7 @@ const welcomeSheetName = "WELCOME"
 const accountSheetName = "Account";
 const budgetSheetName = "Budget";
 const incomeSheetName = "Income";
+const accountsSheetName = "Accounts";
 
 /**********************/
 /*** DEFAULT SHEETS ***/
@@ -16,7 +17,8 @@ const incomeSheetName = "Income";
 var defaultSheets = [
   welcomeSheetName,
   budgetSheetName,
-  incomeSheetName
+  incomeSheetName,
+  accountsSheetName
 ];
 
 /************************/
@@ -49,8 +51,15 @@ const nov = "November";
 const dec = "December";
 const nextYear = "2022";
 const months = [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec, nextYear];
+const validMonths = [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec];
 var monthData = [];
 var monthSummary;
+
+/***********************/
+/*** OTHER VARIABLES ***/
+/***********************/
+const defaultNumberOfTrackerRows = 100;
+
 
 /***************/
 /*** FORMATS ***/

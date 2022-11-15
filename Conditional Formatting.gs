@@ -34,13 +34,15 @@ function conditionalFormatting(sheet){
     .setRanges([range])
     .build();
   rules.push(equalsBudget);
-  //********************//
-  //* TRACKER SECTIONS *//
-  //********************//
+  //****************************//
+  //* EXPENSE TRACKER SECTIONS *//
+  //****************************//
   let bills = getBills();
+  let trackerColumnStart = 8;
   let trackerRows = getTrackerRows(sheet, expenseTrackerString);
-  range = sheet.getRange(startRow, 8, trackerRows, 1);
+  range = sheet.getRange(startRow, trackerColumnStart, trackerRows, 1);
   for( i = 0; i < bills.length; i++ ){
+    // SET CONDITION WHEN A BILL IS SELECTED IN THE CATEGORY COLUMN
     let bill = SpreadsheetApp.newConditionalFormatRule()
       .whenTextEqualTo(bills[i].name)
       .setBackground(colors.darkCyan2)
@@ -49,12 +51,30 @@ function conditionalFormatting(sheet){
       .build();
     rules.push(bill);
   }
+  // SET CONDITION WHEN THE ACCOUNT COLUMN IS BLANK WHILE THE AMOUNT COLUMN IS NOT BLANK
+  // EXPENSE SECTION
+  range = sheet.getRange(startRow, trackerColumnStart + 2, trackerRows, 1);
+  let expenseAccountNotSelectedWithAmountPresent = SpreadsheetApp.newConditionalFormatRule()
+    .whenFormulaSatisfied("=AND(ISBLANK($J5:$J), NOT(ISBLANK($L5:$L)))")
+    .setBackground(colors.red)
+    .setRanges([range])
+    .build();
+  rules.push(expenseAccountNotSelectedWithAmountPresent);
+  // INCOME SECTION
+  range = sheet.getRange(startRow, trackerColumnStart + 8, trackerRows, 1);
+  let incomeAccountNotSelectedWithAmountPresent = SpreadsheetApp.newConditionalFormatRule()
+    .whenFormulaSatisfied("=AND(ISBLANK($P5:$P), NOT(ISBLANK($R5:$R)))")
+    .setBackground(colors.red)
+    .setRanges([range])
+    .build();
+  rules.push(incomeAccountNotSelectedWithAmountPresent);
   //******************//
   //* BILLS SECTIONS *//
   //******************//
   // Paid? Column
+  let billsStartingColumn = 20;
   if( bills.length > 0 ){
-    range = sheet.getRange(startRow, 19, bills.length, 1);
+    range = sheet.getRange(startRow, billsStartingColumn + 1, bills.length, 1);
     var paid = SpreadsheetApp.newConditionalFormatRule()
     .whenTextEqualTo("PAID")
     .setBackground(colors.lightGreen2)
@@ -74,7 +94,7 @@ function conditionalFormatting(sheet){
     .build();
     rules.push(partial);
     // Difference Column
-    range = sheet.getRange(startRow, 22, bills.length, 1);
+    range = sheet.getRange(startRow, billsStartingColumn + 4, bills.length, 1);
     let lessThanBills = SpreadsheetApp.newConditionalFormatRule()
     .whenNumberLessThan(0)
     .setBackground(colors.lightRed2)
