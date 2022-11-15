@@ -5,7 +5,7 @@ function colA1ToIndex(colA1) {
       radix = "Z".charCodeAt(0) - A + 1;
 
   if(typeof colA1 !== 'string' || !/^[A-Z]+$/.test(colA1)) {
-    throw new Error("Expected column label");
+    error("Expected column label. --Helper Methods/colA1ToIndex()");
   }
 
   for(i = 0, l = colA1.length ; i < l ; i++) {

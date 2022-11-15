@@ -24,7 +24,6 @@ function locateOnSheet(sheet, find){
       return location;
     }
   }
-  Logger.log('"' + find + '" not found on "' + sheet.getName() + '" sheet');
-  error('"' + find + '" not found on "' + sheet.getName() + '" sheet. --locateOnSheet()');
+  error(`\"${find}\" not found on \"${sheet.getName()}\" sheet. --locateOnSheet()`);
   return null;
 }

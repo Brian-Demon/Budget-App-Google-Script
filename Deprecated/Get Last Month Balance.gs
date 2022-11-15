@@ -6,7 +6,7 @@ function getLastMonthBalance(currentMonth){
   }
   // Check to make sure currentMonth is not January and therefor no previous month balance
   if( currentMonth === jan ){
-    Logger.log('Somehow jan was passed to "--getLastMonthBalance()", check the validation in --buildBudget()');
+    error('Somehow jan was passed to "--getLastMonthBalance()", check the validation in --buildBudget()');
     return 0;
   }
   
@@ -32,5 +32,5 @@ function getLastMonthBalance(currentMonth){
       return data[index + 3];
     }
   }
-  Logger.log("Something went wrong");
+  error("Something went wrong --getLastMonthBalance()");
 }

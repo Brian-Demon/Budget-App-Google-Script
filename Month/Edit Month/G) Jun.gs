@@ -1,3 +1,3 @@
 function editJune(){
-  editMonth(Jun);
+  editMonth(jun);
 }

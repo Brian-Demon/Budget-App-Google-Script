@@ -19,13 +19,13 @@ function buildTracker( sheet, tracker, buildAll ){
     startColumn = 8;
     sectionColor = colors.lightBlue3;
   } else if( tracker === incomeTrackerString ) {
-    startColumn = 13;
+    startColumn = 14;
     sectionColor = colors.lightGreen3;
   } else {
     error('Tracker passed is not valid. "' + expenseTrackerString + '" or "' + incomeTrackerString + '" are the only valid options. --buildTracker()');
     return;
   }
-  let numberOfColumns = 4;
+  let numberOfColumns = 5;
   
   /// Find starting row (at "B" Column where "Expense Tracker" is located) + 2
   for( let r = 1; r <= lastRow; r++ ){
@@ -45,8 +45,8 @@ function buildTracker( sheet, tracker, buildAll ){
     }
     if( color === "white" ){
       lastRow = r - 1;
-      if( lastRow < (startRow + 50 - 1) ){
-        lastRow = (startRow + 50 - 1);
+      if( lastRow < (startRow + defaultNumberOfTrackerRows - 1) ){
+        lastRow = (startRow + defaultNumberOfTrackerRows - 1);
       }
       break;
     }
@@ -75,31 +75,34 @@ function buildTracker( sheet, tracker, buildAll ){
   // Set section dropdowns for first column
   let budget = getBudgetFromSheet(sheet);
   let cell = sheet.getRange(startRow, startColumn);
+  let acountValueRange = getAccountsRange();
   let valuesRange;
   if( tracker === expenseTrackerString ){
     valuesRange = sheet.getRange(startRow, 2, budget.length, 1);
   } else if( tracker === incomeTrackerString ){
-    let incomeSources = getIncomeSources();
     valuesRange = getIncomeRange();
   } else {
     error("Invalid tracker passed after clear then re-build sectiion. --buildTracker()");
     return;
   }
+
+  // FIRST COLUMN (Category or Source)
   let rule = SpreadsheetApp.newDataValidation().requireValueInRange(valuesRange).setAllowInvalid(false).build();
   let range = sheet.getRange(startRow, startColumn, numberOfRows, 1);
   setDataValidation(sheet, rule, range);
-//  cell.setDataValidation(rule);
-//  sheet.getRange(startRow, startColumn).copyTo(sheet.getRange(startRow + 1, startColumn, numberOfRows - 1, 1));
-  // Set formats for date and amount columns along with horizontal alignment
-  // Date
+  // SECOND COLUMN (Date)
   sheet.getRange(startRow, startColumn + 1, numberOfRows, 1).setNumberFormat("M/d").setHorizontalAlignment("center");
-  // Amount
-  sheet.getRange(startRow, startColumn + 3, numberOfRows, 1).setNumberFormat(currencyFormat).setHorizontalAlignment("right");
+  // THIRD COLUMN (Account)
+  rule = SpreadsheetApp.newDataValidation().requireValueInRange(acountValueRange).setAllowInvalid(false).build();
+  range = sheet.getRange(startRow, startColumn + 2, numberOfRows, 1);
+  setDataValidation(sheet, rule, range);
+  // FIFTH (Amount)
+  sheet.getRange(startRow, startColumn + 4, numberOfRows, 1).setNumberFormat(currencyFormat).setHorizontalAlignment("right");
   // Total Top Right
   if( tracker === expenseTrackerString ){
-    sheet.getRange(startRow - 3, startColumn + 3).setValue("=SUM(K" + startRow + ":K" + lastRow + ")");
+    sheet.getRange(startRow - 3, startColumn + 4).setValue("=SUM(K" + startRow + ":K" + lastRow + ")");
   } else if( tracker === incomeTrackerString ){
-    sheet.getRange(startRow - 3, startColumn + 3).setValue("=SUM(P" + startRow + ":P" + lastRow + ")");
+    sheet.getRange(startRow - 3, startColumn + 4).setValue("=SUM(P" + startRow + ":P" + lastRow + ")");
   } else {
     error("Invalid tracker passed after clear then re-build sectiion. --buildTracker()");
     return;
