@@ -15,6 +15,6 @@ function getStartRow(sheet = ss.getActiveSheet()){
       return (r + 3);
     }
   }
-  Logger.log("Something went wrong... --getStartRow()");
+  error("Something went wrong... --getStartRow()");
   return null;
 }

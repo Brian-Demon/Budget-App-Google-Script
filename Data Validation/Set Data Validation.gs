@@ -5,9 +5,9 @@ function setDataValidation(sheet, rule, range){
     return;
   }
   
-  let startRow = range.getRow();
-  let startColumn = range.getColumn();
-  let numberOfRows = range.getLastRow() - startRow + 1;
+  // let startRow = range.getRow();
+  // let startColumn = range.getColumn();
+  // let numberOfRows = range.getLastRow() - startRow + 1;
   range.setDataValidation(rule);
 //  let cell = sheet.getRange(range.getRow(), range.getColumn());
 //  cell.setDataValidation(rule);

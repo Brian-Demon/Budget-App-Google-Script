@@ -12,7 +12,7 @@ function getMonth(sheet){
     for( let i in data ){
       let month = data[i];
       if( months.indexOf(month) > -1 ){
-//        Logger.log('The month for this sheet is: ' + month);
+        // Logger.log('The month for this sheet is: ' + month);
         return month;
       }
     }

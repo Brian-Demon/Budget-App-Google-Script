@@ -12,6 +12,7 @@ function buildTracker( sheet, tracker, buildAll ){
   
   let startRow = 0;
   let lastRow = sheet.getLastRow();
+  let maxRows = sheet.getMaxRows();
   let budgetLastRow = 0;
   let startColumn = 0;
   let sectionColor;
@@ -19,7 +20,7 @@ function buildTracker( sheet, tracker, buildAll ){
     startColumn = 8;
     sectionColor = colors.lightBlue3;
   } else if( tracker === incomeTrackerString ) {
-    startColumn = 14;
+    startColumn = 16;
     sectionColor = colors.lightGreen3;
   } else {
     error('Tracker passed is not valid. "' + expenseTrackerString + '" or "' + incomeTrackerString + '" are the only valid options. --buildTracker()');
@@ -61,22 +62,28 @@ function buildTracker( sheet, tracker, buildAll ){
   //*******************************//
   //* CLEAR THEN RE-BUILD TRACKER *//
   //*******************************//
+  let additionalColumns = 0;
+  if( tracker === expenseTrackerString ){
+    additionalColumns = 2;
+  }
   let activeCell = sheet.getRange(1,1);
   sheet.setCurrentCell(activeCell);
   // CLEAR CURRENT TRACKER
   let numberOfRows = lastRow - startRow + 1;
 //  Logger.log("numberOfRows: " + numberOfRows);
-  let maxRows = sheet.getMaxRows();
   rangeArray = [ startRow, startColumn, (maxRows - startRow), numberOfColumns ];
   clearRange(sheet, rangeArray);
+
+  // @TODO: FIX THIS SO EACH TRACKER IS BUILT THE WAY IT'S SUPPOSE TO (CHECK DB TEMPLATE)
   // BUILD TRACKER
   // Set section border and color
-  sheet.getRange(startRow, startColumn, numberOfRows, numberOfColumns).setBackground(sectionColor).setBorder(true, true, true, true, true, true, "black", solid);
+  sheet.getRange(startRow, startColumn, numberOfRows, numberOfColumns + additionalColumns).setBackground(sectionColor).setBorder(true, true, true, true, true, true, "black", solid);
   // Set section dropdowns for first column
   let budget = getBudgetFromSheet(sheet);
-  let cell = sheet.getRange(startRow, startColumn);
+  // let cell = sheet.getRange(startRow, startColumn);
   let acountValueRange = getAccountsRange();
   let valuesRange;
+  let ccValueRange = getCCRange();
   if( tracker === expenseTrackerString ){
     valuesRange = sheet.getRange(startRow, 2, budget.length, 1);
   } else if( tracker === incomeTrackerString ){
@@ -86,23 +93,32 @@ function buildTracker( sheet, tracker, buildAll ){
     return;
   }
 
-  // FIRST COLUMN (Category or Source)
+  // CATEGORY OR SOURCE COLUMN (Category or Source)
   let rule = SpreadsheetApp.newDataValidation().requireValueInRange(valuesRange).setAllowInvalid(false).build();
   let range = sheet.getRange(startRow, startColumn, numberOfRows, 1);
   setDataValidation(sheet, rule, range);
-  // SECOND COLUMN (Date)
+  // DATE COLUMN (Date)
   sheet.getRange(startRow, startColumn + 1, numberOfRows, 1).setNumberFormat("M/d").setHorizontalAlignment("center");
-  // THIRD COLUMN (Account)
+  // ACCOUNT COLUMN (Account)
   rule = SpreadsheetApp.newDataValidation().requireValueInRange(acountValueRange).setAllowInvalid(false).build();
   range = sheet.getRange(startRow, startColumn + 2, numberOfRows, 1);
   setDataValidation(sheet, rule, range);
-  // FIFTH (Amount)
-  sheet.getRange(startRow, startColumn + 4, numberOfRows, 1).setNumberFormat(currencyFormat).setHorizontalAlignment("right");
+  // EXPENSES COLUMNS
+  if( tracker === expenseTrackerString ){
+    // CC COLUMN (CC)
+    rule = SpreadsheetApp.newDataValidation().requireValueInRange(ccValueRange).setAllowInvalid(false).build();
+    range = sheet.getRange(startRow, startColumn + 3, numberOfRows, 1);
+    setDataValidation(sheet, rule, range);
+    // CC DATE COLUMN (CC Date)
+    sheet.getRange(startRow, startColumn + 4, numberOfRows, 1).setNumberFormat("M/d").setHorizontalAlignment("center");
+  }
+  // AMOUNT CELL (Amount)
+  sheet.getRange(startRow, startColumn + 4 + additionalColumns, numberOfRows, 1).setNumberFormat(currencyFormat).setHorizontalAlignment("right");
   // Total Top Right
   if( tracker === expenseTrackerString ){
-    sheet.getRange(startRow - 3, startColumn + 4).setValue("=SUM(K" + startRow + ":K" + lastRow + ")");
+    sheet.getRange(startRow - 3, startColumn + 4 + additionalColumns).setValue("=SUM(N" + startRow + ":N" + maxRows + ")");
   } else if( tracker === incomeTrackerString ){
-    sheet.getRange(startRow - 3, startColumn + 4).setValue("=SUM(P" + startRow + ":P" + lastRow + ")");
+    sheet.getRange(startRow - 3, startColumn + 4 + additionalColumns).setValue("=SUM(T" + startRow + ":T" + maxRows + ")");
   } else {
     error("Invalid tracker passed after clear then re-build sectiion. --buildTracker()");
     return;

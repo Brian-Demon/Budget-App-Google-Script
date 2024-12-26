@@ -14,7 +14,7 @@ function clearRange(sheet, rangeArray){
   }
   // Check if rangeArray is valid
   if( rangeArray.length !== 4 ){
-    Logger.log("Length: " + rangeArray.length);
+    // Logger.log("Length: " + rangeArray.length);
     error("rangeArray passed is not valid. Please contact support. --clearRange()");
     return;
   }
@@ -28,7 +28,7 @@ function clearRange(sheet, rangeArray){
 //  Logger.log("Number of Rows: " + numberOfRows);
 //  Logger.log("Number of Columns: " + numberOfColumns);
   if( ss.getSheetByName(empty) ){
-    ss.deleteSheet(empty);
+    ss.deleteSheet(ss.getSheetByName(empty));
   }
   ss.insertSheet(empty, 1).hideSheet();
   let emptySheet = ss.getSheetByName(empty);

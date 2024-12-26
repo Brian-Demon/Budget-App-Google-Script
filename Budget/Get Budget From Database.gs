@@ -11,22 +11,22 @@ function getBudgetFromDatabase(){
   // Get budget from database
   let lastRow = sheet.getLastRow();
   if( lastRow === 0 ){
-    Logger.log("No budget found in the database. --getBudgetFromDatabase()");
+    error("No budget found in the database. --getBudgetFromDatabase()")
     return;
   }
   let budget = [];
   for( let r = 1; r <= lastRow; r++ ){
     let name = sheet.getRange(r, 1).getValue();
-    let isBill = sheet.getRange(r, 2).getValue();
+    let billDue = sheet.getRange(r, 2).getValue();
     let amount = sheet.getRange(r, 3).getValue();
 //    Logger.log("r: " + r);
 //    Logger.log("name: " + name);
-//    Logger.log("isBill: " + isBill);
+//    Logger.log("billDue: " + billDue);
 //    Logger.log("amount: " + amount);
     let lineItem = {
       name: name,
       amount: amount,
-      isBill: isBill
+      billDue: billDue
     };
     budget.push(lineItem);
   }

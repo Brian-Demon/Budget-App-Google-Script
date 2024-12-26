@@ -4,7 +4,7 @@ function getSpreadsheetByName(filename){
     let file = files.next();
     let name = file.getName();
     if( name === filename ){
-//      Logger.log(name + ' FOUND!');
+      // Logger.log(name + ' FOUND!');
       let foundSS = SpreadsheetApp.open(file)
       return foundSS;
     }

@@ -20,12 +20,12 @@ function getIncomeRange(){
   for( let r = startRow; r <= lastRow; r++ ){
     let value = sheet.getRange(r, column).getValue();
     let color = sheet.getRange(r, column).getBackground();
-   Logger.log("Row: " + r + ", Value: " + value + ", Color: " + color + "darkGray4: " + colors.darkGray4);
+  //  Logger.log("Row: " + r + ", Value: " + value + ", Color: " + color + "darkGray4: " + colors.darkGray4);
     if( color !== colors.darkGray4 ){
       endRow = r - 1;
       break;
     }
   }
-//  Logger.log(incomeSources.toString());
+  
   return sheet.getRange(startRow, column, (endRow - startRow + 1), 1);
 }

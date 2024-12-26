@@ -26,6 +26,6 @@ function getAccountsRange(){
       break;
     }
   }
-//  Logger.log(accountsSources.toString());
+  
   return sheet.getRange(startRow, column, (endRow - startRow + 1), 1);
 }

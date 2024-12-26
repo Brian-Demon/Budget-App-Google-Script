@@ -34,6 +34,7 @@ function conditionalFormatting(sheet){
     .setRanges([range])
     .build();
   rules.push(equalsBudget);
+
   //****************************//
   //* EXPENSE TRACKER SECTIONS *//
   //****************************//
@@ -55,26 +56,27 @@ function conditionalFormatting(sheet){
   // EXPENSE SECTION
   range = sheet.getRange(startRow, trackerColumnStart + 2, trackerRows, 1);
   let expenseAccountNotSelectedWithAmountPresent = SpreadsheetApp.newConditionalFormatRule()
-    .whenFormulaSatisfied("=AND(ISBLANK($J5:$J), NOT(ISBLANK($L5:$L)))")
+    .whenFormulaSatisfied("=AND(ISBLANK($J5:$J), NOT(ISBLANK($N5:$N)))")
     .setBackground(colors.red)
     .setRanges([range])
     .build();
   rules.push(expenseAccountNotSelectedWithAmountPresent);
   // INCOME SECTION
-  range = sheet.getRange(startRow, trackerColumnStart + 8, trackerRows, 1);
+  range = sheet.getRange(startRow, trackerColumnStart + 10, trackerRows, 1);
   let incomeAccountNotSelectedWithAmountPresent = SpreadsheetApp.newConditionalFormatRule()
-    .whenFormulaSatisfied("=AND(ISBLANK($P5:$P), NOT(ISBLANK($R5:$R)))")
+    .whenFormulaSatisfied("=AND(ISBLANK($R5:$R), NOT(ISBLANK($T5:$T)))")
     .setBackground(colors.red)
     .setRanges([range])
     .build();
   rules.push(incomeAccountNotSelectedWithAmountPresent);
+
   //******************//
   //* BILLS SECTIONS *//
   //******************//
   // Paid? Column
-  let billsStartingColumn = 20;
+  let billsStartingColumn = 21;
   if( bills.length > 0 ){
-    range = sheet.getRange(startRow, billsStartingColumn + 1, bills.length, 1);
+    range = sheet.getRange(startRow, billsStartingColumn + 3, bills.length, 1);
     var paid = SpreadsheetApp.newConditionalFormatRule()
     .whenTextEqualTo("PAID")
     .setBackground(colors.lightGreen2)
@@ -94,7 +96,7 @@ function conditionalFormatting(sheet){
     .build();
     rules.push(partial);
     // Difference Column
-    range = sheet.getRange(startRow, billsStartingColumn + 4, bills.length, 1);
+    range = sheet.getRange(startRow, billsStartingColumn + 6, bills.length, 1);
     let lessThanBills = SpreadsheetApp.newConditionalFormatRule()
     .whenNumberLessThan(0)
     .setBackground(colors.lightRed2)

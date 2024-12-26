@@ -1,11 +1,11 @@
 function mySetColumnWidth(sheet, column, width){
   if( !sheet ){
-    Logger.log("Invalid sheet passed to mySetColumnWidth()");
+    // Logger.log("Invalid sheet passed to mySetColumnWidth()");
     error("Invalid sheet passed. --mySetColumnWidth()");
     return;
   }
   if(!column || !width || typeof column !== 'string' ){
-    Logger.log("Invalid data passed to mySetColumnWidth()");
+    // Logger.log("Invalid data passed to mySetColumnWidth()");
     error("Invalid data passed. --mySetColumnWidth()");
     return;
   }

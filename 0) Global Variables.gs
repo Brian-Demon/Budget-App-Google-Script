@@ -6,9 +6,9 @@ var ss = SpreadsheetApp.openById(ssID);
 /**************/
 const empty = "Empty";
 const welcomeSheetName = "WELCOME"
-const accountSheetName = "Account";
 const budgetSheetName = "Budget";
 const incomeSheetName = "Income";
+const ccSheetName = "CCs"
 const accountsSheetName = "Accounts";
 
 /**********************/
@@ -18,6 +18,7 @@ var defaultSheets = [
   welcomeSheetName,
   budgetSheetName,
   incomeSheetName,
+  ccSheetName,
   accountsSheetName
 ];
 

@@ -14,9 +14,9 @@ function onOpen(){
   
   // Check if Loading sheet is visible somehow, if so delete it
   let loadingSheet = ss.getSheetByName("Loading");
-  Logger.log("loading sheet check: " + loadingSheet);
+  // Logger.log("loading sheet check: " + loadingSheet);
   if( loadingSheet ){
-    Logger.log("Deleting...");
+    // Logger.log("Deleting...");
     ss.deleteSheet(loadingSheet);
   }
 //  ss.toast("You are now free to move about the cabin.", "Initial Startup COMPLETE", 5);

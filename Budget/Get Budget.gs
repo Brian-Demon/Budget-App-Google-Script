@@ -6,12 +6,12 @@ function getBudget(){
   
   for( let r = area.startRow; r <= area.endRow; r++ ){
     let name = sheet.getRange(r, 2).getValue();
-    let isBill = sheet.getRange(r, 3).getValue();
+    let billDue = sheet.getRange(r, 3).getValue();
     let amount = sheet.getRange(r, 4).getValue();
     let lineItem = {
       name: name,
       amount: amount,
-      isBill: isBill
+      billDue: billDue
     };
     budget.push(lineItem);
   }

@@ -18,12 +18,6 @@ function getLastMonthSheet(currentMonth){
   if( !sheet ){
     error(`\"${prevMonth}\" does not exist in the database. Please contact support. --Month/getLastMonthAccountBalance()`);
     return;
-  }
-
-  // Get previous row from ssData and check to make sure previous month exists in ssData otherwise return sheet
-  if( !sheet ){
-    error(`\"${currentMonth}\" does not exist in the database. Please contact support. --Month/getPrevMonthSheet()`);
-    return;
   } else {
     return sheet;
   }

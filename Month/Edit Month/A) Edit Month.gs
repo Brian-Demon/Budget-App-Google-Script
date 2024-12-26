@@ -1,5 +1,5 @@
 function editMonth(month){
-  Logger.log(`Month passed to editMonth: ${month}`)
+  // Logger.log(`Month passed to editMonth: ${month}`)
   // Check and set ssData for database
   let ssData = getSpreadsheetByName(ssID);
   if( !ssDataCheck(ssData) ){

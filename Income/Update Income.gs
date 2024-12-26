@@ -21,9 +21,10 @@ function updateIncome(){
   sheet = ss.getSheetByName(currentMonthName);
   let lastRow = sheet.getLastRow();
   let startRow = 0;
+  let column = 22;
   for( let r = 1; r <= lastRow; r++ ){
-    let value = sheet.getRange(r, 20).getValue();
-    // Logger.log(`Value at r:${r}/c:${20} = ${value}`);
+    let value = sheet.getRange(r, column).getValue();
+    // Logger.log(`Value at r:${r}/c:${column} = ${value}`);
     if( value === "Bill Reminders" ){
       startRow = r + 3;
       break;
@@ -31,7 +32,7 @@ function updateIncome(){
   }
   let numberOfRows = getTrackerRows(sheet, incomeTrackerString);
   let valuesRange = getIncomeRange();
-  let range = sheet.getRange(startRow, 13, numberOfRows, 1);
+  let range = sheet.getRange(startRow, 16, numberOfRows, 1);
   // UPDATE DATA VALIDATION
   updateDataValidation(sheet, valuesRange, range);
   

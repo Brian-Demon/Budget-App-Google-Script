@@ -71,6 +71,9 @@ function buildBudget(sheet, buildAll){
   //*********************************//
   sheet.getRange(startRow, 4, numberOfBudgetRows, 1).setBackground(colors.lightMagenta2).setNumberFormat(currencyFormat);
   let month = getMonth(sheet);
+  // Logger.log(`Month = ${month}`);
+  // Logger.log(`jan = ${jan}`);
+  // Logger.log(`month == jan: ${month == jan}`);
   if( month !== jan ){
     let prevMonth = getPrevMonth(month);
     let budgetNames = extractKey(budget, "name");
@@ -109,10 +112,11 @@ function buildBudget(sheet, buildAll){
   // Set FOURTH ("This Month") column //
   //**********************************//
   sheet.getRange(startRow, 5, numberOfBudgetRows, 1).setBackground(colors.lightPurple2).setNumberFormat(currencyFormat);
-  let expenseRows = getTrackerRows(sheet, expenseTrackerString);
-  let expenseLastRow = startRow + expenseRows - 1;
-//  Logger.log("Tracker Rows: " + trackerRows);
-  sheet.getRange(startRow, 5).setValue("=sumif($H$" + startRow + ":$K$" + expenseLastRow + ",$B" + startRow + ",$K$" + startRow + ":$K$" + expenseLastRow + ")");
+  // let expenseRows = getTrackerRows(sheet, expenseTrackerString);
+  // let expenseLastRow = startRow + expenseRows - 1;
+  //  Logger.log("Tracker Rows: " + trackerRows);
+  let expenseLastRow = sheet.getMaxRows();
+  sheet.getRange(startRow, 5).setValue("=sumif($H$" + startRow + ":$H$" + expenseLastRow + ",$B" + startRow + ",$N$" + startRow + ":$N$" + expenseLastRow + ")");
   if( numberOfRows > 1 ){
     sheet.getRange(startRow, 5).copyTo(sheet.getRange(startRow + 1, 5, numberOfRows - 1, 1));
   }
@@ -133,13 +137,19 @@ function buildBudget(sheet, buildAll){
   let accountNameColumn = 3;
   let accountAmountColumn = 6;
   let balanceRow = endRow + 3;
+  let lastMonthAccountsAndBalances;
+  let numberOfAccountsLastMonth;
+  // let lastMonthSheet;
+  let lastMonthBalance;
   if( month !== jan ){
     lastMonthBalance = getLastMonthBalance(month);
+    // lastMonthAccountsAndBalances = getLastMonthAccountsAndBalances(lastMonthSheet);
+    lastMonthAccountsAndBalances = getLastMonthAccountsAndBalances(getLastMonthSheet(getMonth(sheet)));
+    numberOfAccountsLastMonth = lastMonthAccountsAndBalances.length;
+    // lastMonthSheet = getLastMonthSheet(month);
   }
-  let lastMonthSheet = getLastMonthSheet(month);
-  let lastMonthAccountsAndBalances = getLastMonthAccountsAndBalances(lastMonthSheet);
   // let numberOfAccountsLastMonth = Object.keys(lastMonthAccountsAndBalances).length;
-  let numberOfAccountsLastMonth = lastMonthAccountsAndBalances.length;
+  // let numberOfAccountsLastMonth = lastMonthAccountsAndBalances.length;
   // Rows
   let lastMonthEndingBalanceRow = balanceRow + 1;
   let thisMonthBalanceStartRow = lastMonthEndingBalanceRow + 2;
@@ -176,31 +186,47 @@ function buildBudget(sheet, buildAll){
 
   // LAST MONTH SECTION
   // Last Month Income Per Account Section
-  sheet.getRange(lastMonthBalanceStartRow, 3, 1, 4).mergeAcross().setValue("Last Month Balance Per Account:").setHorizontalAlignment("center");
-  sheet.getRange(lastMonthBalanceStartRow, 3, numberOfAccountsLastMonth + 1, 4).setBackground(colors.lightCornflowerBlue2)
-  for( let row = lastMonthBalanceStartRow + 1; row < lastMonthBalanceStartRow + numberOfAccountsLastMonth + 1; row++){
-    let index = row - lastMonthBalanceStartRow - 1;
-    sheet.getRange(row, accountNameColumn, 1, 3).mergeAcross();
-    sheet.getRange(row, accountNameColumn).setValue(lastMonthAccountsAndBalances[index][0]).setHorizontalAlignment("right");
-    sheet.getRange(row, accountAmountColumn).setValue(lastMonthAccountsAndBalances[index][1]).setNumberFormat(currencyFormat);
-  }
-
-  // SET THIS MONTH BALANCES PER ACCOUNT DEPENDING IF THAT ACCOUNT EXISTED LAST MONTH
-  for( let i = 0; i < accounts.length; i++ ){
-    let accountToFind = accounts[i];
-    let row = getRowByColumnAndValue(sheet, 3, accountToFind, lastMonthBalanceStartRow + 1);
-    let formula = '0';
-    let numberOfTrackingRows = defaultNumberOfTrackerRows + startRow - 1;
-    if( row != null ){
-      formula = `=SUMIF(P\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, R\$${startRow}:R\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:L\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, L\$${startRow}:L\$${numberOfTrackingRows})+F${row}`;
-    } else {
-      formula = `=SUMIF(P\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, R\$${startRow}:R\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:L\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, L\$${startRow}:L\$${numberOfTrackingRows})`;
+  if( month !== jan){
+    sheet.getRange(lastMonthBalanceStartRow, 3, 1, 4).mergeAcross().setValue("Last Month Balance Per Account:").setHorizontalAlignment("center");
+    sheet.getRange(lastMonthBalanceStartRow, 3, numberOfAccountsLastMonth + 1, 4).setBackground(colors.lightCornflowerBlue2);
+    for( let row = lastMonthBalanceStartRow + 1; row < lastMonthBalanceStartRow + numberOfAccountsLastMonth + 1; row++){
+      let index = row - lastMonthBalanceStartRow - 1;
+      sheet.getRange(row, accountNameColumn, 1, 3).mergeAcross();
+      sheet.getRange(row, accountNameColumn).setValue(lastMonthAccountsAndBalances[index][0]).setHorizontalAlignment("right");
+      sheet.getRange(row, accountAmountColumn).setValue(lastMonthAccountsAndBalances[index][1]).setNumberFormat(currencyFormat);
     }
-    sheet.getRange(thisMonthBalanceStartRow + i + 1, 6).setValue(formula);
-  }
 
-  // Set border, font weight, and font color for This Month Income & Expenses Section
-  sheet.getRange(lastMonthBalanceStartRow, 3, (numberOfAccountsLastMonth + 1), 4).setBorder(true, true, true, true, true, true, "black", solidMedium).setFontWeight("bold").setFontColor(colors.black);
+    // SET THIS MONTH BALANCES PER ACCOUNT DEPENDING IF THAT ACCOUNT EXISTED LAST MONTH
+    for( let i = 0; i < accounts.length; i++ ){
+      let accountToFind = accounts[i];
+      let row = getRowByColumnAndValue(sheet, 3, accountToFind, lastMonthBalanceStartRow + 1);
+      let formula = '0';
+      // let numberOfTrackingRows = defaultNumberOfTrackerRows + startRow - 1;
+      let numberOfTrackingRows = sheet.getMaxRows();
+      if( row != null ){
+        formula = `=SUMIF(R\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, T\$${startRow}:T\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:J\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, N\$${startRow}:N\$${numberOfTrackingRows})+F${row}`;
+      } else {
+        formula = `=SUMIF(R\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, T\$${startRow}:T\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:J\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, N\$${startRow}:N\$${numberOfTrackingRows})`;
+      }
+      sheet.getRange(thisMonthBalanceStartRow + i + 1, 6).setValue(formula);
+    }
+
+    // Set border, font weight, and font color for This Month Income & Expenses Section
+    sheet.getRange(lastMonthBalanceStartRow, 3, (numberOfAccountsLastMonth + 1), 4).setBorder(true, true, true, true, true, true, "black", solidMedium).setFontWeight("bold").setFontColor(colors.black);
+  } else {
+    for( let i = 0; i < accounts.length; i++ ){
+      let accountToFind = accounts[i];
+      let row = getRowByColumnAndValue(sheet, 3, accountToFind, lastMonthBalanceStartRow + 1);
+      let formula = '0';
+      let numberOfTrackingRows = defaultNumberOfTrackerRows + startRow - 1;
+      if( row != null ){
+        formula = `=SUMIF(R\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, T\$${startRow}:T\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:J\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, N\$${startRow}:N\$${numberOfTrackingRows})+F${row}`;
+      } else {
+        formula = `=SUMIF(R\$${startRow}:R\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, T\$${startRow}:T\$${numberOfTrackingRows})-SUMIF(J\$${startRow}:J\$${numberOfTrackingRows}, \$C${thisMonthBalanceStartRow + i + 1}, N\$${startRow}:N\$${numberOfTrackingRows})`;
+      }
+      sheet.getRange(thisMonthBalanceStartRow + i + 1, 6).setValue(formula).setNumberFormat(currencyFormat);
+    }
+  }
   //****************************************//
   // Update Expense Tracker Data Validation //
   //****************************************//

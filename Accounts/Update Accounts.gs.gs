@@ -7,7 +7,7 @@ function updateAccounts(){
   
   let sheet = ssData.getSheetByName(accountsSheetName);
   if( !sheet ){
-    let sheets = ssData.getSheets();
+    // let sheets = ssData.getSheets();
     ssData.insertSheet(accountsSheetName, 2).setTabColor(colors.green);
     sheet = ssData.getSheetByName(accountsSheetName);
   }
@@ -21,16 +21,16 @@ function updateAccounts(){
   sheet = ss.getSheetByName(currentMonthName);
   let lastRow = sheet.getLastRow();
   let startRow = 0;
+  let column = 22; // V
   for( let r = 1; r <= lastRow; r++ ){
-    let value = sheet.getRange(r, 20).getValue();
-    // Logger.log(`Value at r:${r}/c:${20} = ${value}`);
+    let value = sheet.getRange(r, column).getValue();
+    // Logger.log(`Value at r:${r}/c:${column} = ${value}`);
     if( value === "Bill Reminders" ){
       startRow = r + 3;
       break;
     }
   }
 
-  // @TODO: CHANGE THE BELOW INFO SO IT UPDATES THE DATA VALIDATION FOR BOTH THE EXPENSE AND INCOME TRACKERS FOR CURRENT MONTH SHEET!!!!
   let numberOfRows = getTrackerRows(sheet, incomeTrackerString);
   let valuesRange = getAccountsRange();
   let range = sheet.getRange(startRow, 10, numberOfRows, 1);
@@ -45,6 +45,8 @@ function updateAccounts(){
   today = Utilities.formatDate(new Date(), timeZone, dateFormat);
   accountSheet = ss.getSheetByName(accountsSheetName);
   accountSheet.getRange(row, 2).setValue(today);
+
+  buildBudget(sheet, false);
   
   ss.toast("Accounts updated in the database and for the Current Month sheet successfully.");
 }

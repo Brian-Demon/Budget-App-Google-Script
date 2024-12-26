@@ -26,6 +26,7 @@ function createTemplate(spreadsheet){
   // **************************** //
   // *** SETUP TEMPLATE SHEET *** //
   // **************************** //
+  let startingColumn = 2;
   // Hide gridlines
   sheet.setHiddenGridlines(true);
   
@@ -35,55 +36,60 @@ function createTemplate(spreadsheet){
   // Set column widths
   mySetColumnWidth(sheet, "A", 5);
   mySetColumnWidth(sheet, "G", 5);
-  mySetColumnWidth(sheet, "L", 5);
-  mySetColumnWidth(sheet, "Q", 5);
-  mySetColumnWidth(sheet, "W", 5);
+  mySetColumnWidth(sheet, "N", 5);
+  mySetColumnWidth(sheet, "T", 5);
+  sheet.insertColumnAfter(26);
+  mySetColumnWidth(sheet, "AA", 5);
   
   // Set merged cells
-  sheet.getRange(2, 2, 1, 5).mergeAcross();
-  sheet.getRange(2, 8, 1, 2).mergeAcross();
-  sheet.getRange(2, 13, 1, 2).mergeAcross();
-  sheet.getRange(2, 18, 1, 3).mergeAcross();
+  sheet.getRange(2, startingColumn, 1, 5).mergeAcross();
+  sheet.getRange(2, startingColumn + 6, 1, 4).mergeAcross();
+  sheet.getRange(2, startingColumn + 13, 1, 3).mergeAcross();
+  sheet.getRange(2, startingColumn + 19, 1, 4).mergeAcross();
   
   // Set background, font colors, horizontal & vertical alignments, font weight (bold), and borders
-  sheet.getRange(2, 2).setBackground(colors.black).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);;
-  sheet.getRange(3, 2, 1, 5).setBackground(colors.darkRed2).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);;
-  sheet.getRange(2, 8, 2, 4).setBackground(colors.darkCornflowerBlue3).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);;
-  sheet.getRange(2, 13, 2, 4).setBackground(colors.darkCyan3).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);;
-  sheet.getRange(2, 18, 2, 5).setBackground(colors.darkPurple2).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);;  
+  sheet.getRange(2, startingColumn).setBackground(colors.black).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);
+  sheet.getRange(3, startingColumn, 1, 5).setBackground(colors.darkRed2).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);
+  sheet.getRange(2, startingColumn + 6, 2, 6).setBackground(colors.darkCornflowerBlue3).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);
+  sheet.getRange(2, startingColumn + 13, 2, 5).setBackground(colors.darkCyan3).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);
+  sheet.getRange(2, startingColumn + 19, 2, 6).setBackground(colors.darkPurple2).setFontColor(colors.white).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setBorder(true, true, true, true, true, true, "black", solidMedium);
   
   // Set text
   // Budget 
-  sheet.getRange(3, 2).setValue('Line Item');
-  sheet.getRange(3, 3).setValue('Amount');
-  sheet.getRange(3, 4).setValue('Last Month');
-  sheet.getRange(3, 5).setValue('This Month');
-  sheet.getRange(3, 6).setValue('Balance');
+  sheet.getRange(3, startingColumn).setValue('Line Item');
+  sheet.getRange(3, startingColumn + 1).setValue('Amount');
+  sheet.getRange(3, startingColumn + 2).setValue('Last Month');
+  sheet.getRange(3, startingColumn + 3).setValue('This Month');
+  sheet.getRange(3, startingColumn + 4).setValue('Balance');
   // Expenses
-  sheet.getRange(2, 8).setValue('Expense Tracker');
-  sheet.getRange(2, 10).setValue('Expenses Total:').setHorizontalAlignment("right");
-  sheet.getRange(2, 11).setValue(0).setNumberFormat(currencyFormat);
-  sheet.getRange(3, 8).setValue('Category');
-  sheet.getRange(3, 9).setValue('Date');
-  sheet.getRange(3, 10).setValue('Notes');
-  sheet.getRange(3, 11).setValue('Amount');
+  sheet.getRange(2, startingColumn + 6).setValue('Expense Tracker');
+  sheet.getRange(2, startingColumn + 10).setValue('Expenses Total:').setHorizontalAlignment("right");
+  sheet.getRange(2, startingColumn + 11).setValue(0).setNumberFormat(currencyFormat);
+  sheet.getRange(3, startingColumn + 6).setValue('Category');
+  sheet.getRange(3, startingColumn + 7).setValue('Date');
+  sheet.getRange(3, startingColumn + 8).setValue('CC Date');
+  sheet.getRange(3, startingColumn + 9).setValue('Account');
+  sheet.getRange(3, startingColumn + 10).setValue('Notes');
+  sheet.getRange(3, startingColumn + 11).setValue('Amount');
   // Income
-  sheet.getRange(2, 13).setValue('Income Tracker');
-  sheet.getRange(2, 15).setValue('Income Total:').setHorizontalAlignment("right");
-  sheet.getRange(2, 16).setValue(0).setValue(0).setNumberFormat(currencyFormat);
-  sheet.getRange(3, 13).setValue('Source');
-  sheet.getRange(3, 14).setValue('Date');
-  sheet.getRange(3, 15).setValue('Notes');
-  sheet.getRange(3, 16).setValue('Amount');
+  sheet.getRange(2, startingColumn + 13).setValue('Income Tracker');
+  sheet.getRange(2, startingColumn + 16).setValue('Income Total:').setHorizontalAlignment("right");
+  sheet.getRange(2, startingColumn + 17).setValue(0).setNumberFormat(currencyFormat);
+  sheet.getRange(3, startingColumn + 13).setValue('Source');
+  sheet.getRange(3, startingColumn + 14).setValue('Date');
+  sheet.getRange(3, startingColumn + 15).setValue('Account');
+  sheet.getRange(3, startingColumn + 16).setValue('Notes');
+  sheet.getRange(3, startingColumn + 17).setValue('Amount');
   // Bill Reminders
-  sheet.getRange(2, 18).setValue('Bill Reminders');
-  sheet.getRange(2, 21).setValue('Bills Total:').setHorizontalAlignment("right");
-  sheet.getRange(2, 22).setValue(0).setValue(0).setNumberFormat(currencyFormat);
-  sheet.getRange(3, 18).setValue('Bill');
-  sheet.getRange(3, 19).setValue('Paid?');
-  sheet.getRange(3, 20).setValue('Paid Amount');
-  sheet.getRange(3, 21).setValue('Budget');
-  sheet.getRange(3, 22).setValue('Difference');
+  sheet.getRange(2, startingColumn + 19).setValue('Bill Reminders');
+  sheet.getRange(2, startingColumn + 23).setValue('Bills Total:').setHorizontalAlignment("right");
+  sheet.getRange(2, startingColumn + 24).setValue(0).setNumberFormat(currencyFormat);
+  sheet.getRange(3, startingColumn + 19).setValue('Bill');
+   sheet.getRange(3, startingColumn + 20).setValue('Due');
+  sheet.getRange(3, startingColumn + 21).setValue('Paid?');
+  sheet.getRange(3, startingColumn + 22).setValue('Paid Amount');
+  sheet.getRange(3, startingColumn + 23).setValue('Budget');
+  sheet.getRange(3, startingColumn + 24).setValue('Difference');
   // Hide row right before what will be the Start Row
   myHideRow(sheet, 4);
   

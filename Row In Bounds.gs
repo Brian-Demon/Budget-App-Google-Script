@@ -9,9 +9,10 @@ function rowInBounds(sheet, currentRow, typeOfAction) {
     numberOfRows: 0
   };
   let column = 0;
+  // Logger.log(sheet.getName());
   if( sheet.getName() === budgetSheetName ){
     column = 2;
-  } else if( sheet.getName() === incomeSheetName ) {
+  } else if( sheet.getName() === incomeSheetName || sheet.getName() === accountsSheetName || sheet.getName() === ccSheetName) {
     column = 3;
   } else {
     error("Column is set to 0 due to wrong sheet name. --rowInBounds()");

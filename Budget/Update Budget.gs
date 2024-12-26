@@ -23,7 +23,7 @@ function updateBudget(){
     sheet.clear();
     for( let i = 0; i < budget.length; i++ ){
       sheet.getRange(i + 1, 1).setValue(budget[i].name);
-      sheet.getRange(i + 1, 2).setValue(budget[i].isBill);
+      sheet.getRange(i + 1, 2).setValue(budget[i].billDue);
       sheet.getRange(i + 1, 3).setValue(budget[i].amount);
     }
     // Set date updated (row, 2)
