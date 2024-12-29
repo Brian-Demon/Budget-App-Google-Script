@@ -25,7 +25,7 @@
       document.getElementById('loadingImage').className = "visible";
       let month = document.getElementById('months').value;
       google.script.run.withSuccessHandler(function(arg){
-//        console.log(arg);
+        // console.log(arg);
         document.getElementById('data').value = arg;
         document.getElementById('loadingImage').className = "invisible";
         buildTable();
@@ -38,32 +38,48 @@
       }
       return document.getElementById('data').value;
     }
-    
-    function fixValue(value){
-      let newValue;
-      if( (typeof value) === "string" ){
-        let negCheck = value.search("-");
-        let regexp = /(\d+)(\.)/g;
-        let match = [...value.matchAll(regexp)];
-//        console.log("regex results: " + match.length);
-        if( match.length > 0 && negCheck > -1 ){
-          value = value.replace("-", "");
-          newValue = "-$" + value;
-        } else if( match.length > 0 && negCheck === -1 ){
-          newValue = "$" + value;
-        } else {
-          newValue = value;
-        }
-      } else {
-        if( value < 0 ){
-          value *= -1;
-          newValue = "-$" + value;
-        } else {
-          newValue = "$" + value;
-        }
+
+  function fixValue(value){
+    let newValue;
+    if( (typeof value) === "string" ){
+      let isnum = value.match(/[A-Za-z]+/) == null;
+      // console.log(`isnum: ${isnum}`);
+      if (!isnum){
+        return value;
       }
-      return newValue;
+      else
+      {
+        value = parseFloat(value);
+        // console.log(`value: ${value} is typeof: ${typeof value}`);
+      }
     }
+    // console.log(`value: ${value} FIXED = ${toFixedNew(value, 2)}`);
+    if( value < 0 ){
+      value *= -1;
+      newValue = "-$" + (numberWithCommas(toFixedNew(value, 2)));
+    } else {
+      newValue = "$" + (numberWithCommas(toFixedNew(value, 2)));
+    }
+    return newValue;
+    
+    function toFixedNew(value, precision) {
+      var precision = precision || 0,
+          power = Math.pow(10, precision),
+          absValue = Math.abs(Math.round(value * power)),
+          result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
+
+      if (precision > 0) {
+          var fraction = String(absValue % power),
+              padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
+          result += '.' + padding + fraction;
+      }
+      return result;
+    }
+
+    function numberWithCommas(number) {
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }
   </script>
   <head>
     <base target="_top">
@@ -89,6 +105,7 @@
             $("tbody").empty();
             $("tfoot").empty();
           }
+
           function buildTable(){
             let tbody = $("<tbody>");
             let month = document.getElementById('months').value;
@@ -102,9 +119,8 @@
               let tr = $("<tr>");
               for( let j = 0; j < data[i].length; j++ ){
                 let td = $("<td>");
-//                td.scope("col");
                 let value = data[i][j];
-//                console.log("[" + i + "][" + j + "] = " + value);
+                // console.log("[" + i + "][" + j + "] = " + value);
                 let newValue = fixValue(value);
                 td.text(newValue);
                 tr.append(td);
@@ -118,13 +134,16 @@
             let lastIndex = data.length - 1;
             for( let i = 0; i < data[lastIndex].length; i++ ){
               let td = $("<td>");
-              let value = fixValue(data[lastIndex][i]);
-              td.append(value);
+              let value = data[lastIndex][i];
+              // console.log("[" + i + "][" + j + "] = " + value);
+              let newValue = fixValue(value);
+              td.text(newValue);
               tr.append(td);
             }
             tfoot.append(tr);
             $("table").append(tfoot);
           }
+          
         </script>
       </table>
     </body>

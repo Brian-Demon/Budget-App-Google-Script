@@ -1,4 +1,7 @@
 function editMonth(month){
+  // LOADING...
+  loading();
+
   // Logger.log(`Month passed to editMonth: ${month}`)
   // Check and set ssData for database
   let ssData = getSpreadsheetByName(ssID);
@@ -16,6 +19,11 @@ function editMonth(month){
   sheet.copyTo(ss);
   ssData.deleteSheet(sheet);
   ss.getSheetByName("Copy of " + month).setName(month);
+  // REBUILD MENU
   menu();
+  
   setActiveSheet(month);
+
+  // STOP LOADING
+  stopLoading();
 }

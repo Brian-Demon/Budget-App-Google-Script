@@ -1,5 +1,5 @@
 function getBudgetFromDatabase(){
-  // Check if database exiists
+  // Check if database exists...
   let ssData = getSpreadsheetByName(ssID);
   if( !ssDataCheck(ssData) ) return;
   // Check if budget sheet in database exists
