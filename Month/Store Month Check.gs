@@ -1,7 +1,4 @@
 function storeMonthCheck(){
-  // LOADING...
-  loading();
-
   // Check if active sheet is able to be stored
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   let sheetName = sheet.getName();
@@ -19,6 +16,11 @@ function storeMonthCheck(){
   if( response !== ui.Button.YES ){
     return;
   }
+
+  // LOADING...
+  loading();
+
+  // Store month...
   restoreMonth(sheetName);
 
   // STOP LOADING...

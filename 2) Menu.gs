@@ -25,8 +25,8 @@ function menu(){
     }
     previousMonthMenu.addSubMenu(previousMonthSubMenu);
   }
-  previousMonthMenu.addSeparator();
-  previousMonthMenu.addItem('Store Current Month (Active Sheet) ', 'storeMonthCheck');
+  // previousMonthMenu.addSeparator();
+  // previousMonthMenu.addItem('Store Current Month (Active Sheet) ', 'storeMonthCheck');
   previousMonthMenu.addSeparator();
   previousMonthMenu.addItem('Store All Previous Months', 'storeAllPreviousMonths');
   if( getMonth(ss.getSheetByName(currentMonthName)) !== jan ){
