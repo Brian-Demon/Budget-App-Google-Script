@@ -19,6 +19,7 @@ function updateBudget(){
   let ui = SpreadsheetApp.getUi();
   let response = ui.alert("Update Current Month?", "Are you sure you want to update the budget?\n", ui.ButtonSet.YES_NO);
   if( response === ui.Button.YES ){
+    // LOADING...
     loading();
     sheet.clear();
     for( let i = 0; i < budget.length; i++ ){
@@ -45,5 +46,7 @@ function updateBudget(){
     }
     stopLoading();
     ss.toast("Budget updated in the database and Current Month successfully.");
+    // STOP LOADING...
+    stopLoading();
   }
 }
