@@ -1,11 +1,11 @@
-function stopLoading(makePrevSHeetActive = true){
+function stopLoading(makePrevSheetActive = true){
   SpreadsheetApp.flush();
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Loading");
   if( sheet ){
     ss.deleteSheet(sheet);
   }
 
-  if (makePrevSHeetActive)
+  if (makePrevSheetActive)
   {
     let lastSheetName = prevSheet[0];
     setActiveSheet(lastSheetName);

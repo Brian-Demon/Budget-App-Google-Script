@@ -24,7 +24,7 @@ function addLine(){
     }
     if( sheet.getName() === budgetSheetName ){
       sheet.insertRowAfter( row );
-      sheet.getRange(row + 1, 3).insertCheckboxes();
+      // sheet.getRange(row + 1, 3).insertCheckboxes();
       sheet.getRange(row + 1, 4).setValue(0).setNumberFormat(currencyFormat);
       sheet.getRange(row + 1, 2, 1, 3).setBackground(colors.darkGray4).setFontColor(colors.white).setFontWeight("bold").setBorder(true, true, true, true, true, true, "black", solid);
     } else if( sheet.getName() === incomeSheetName || sheet.getName() === accountsSheetName || sheet.getName() === ccSheetName){

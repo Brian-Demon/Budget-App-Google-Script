@@ -69,12 +69,11 @@ function buildTracker( sheet, tracker, buildAll ){
   let activeCell = sheet.getRange(1,1);
   sheet.setCurrentCell(activeCell);
   // CLEAR CURRENT TRACKER
-  let numberOfRows = lastRow - startRow + 1;
+  let numberOfRows = maxRows - startRow + 1;
 //  Logger.log("numberOfRows: " + numberOfRows);
   rangeArray = [ startRow, startColumn, (maxRows - startRow), numberOfColumns ];
   clearRange(sheet, rangeArray);
 
-  // @TODO: FIX THIS SO EACH TRACKER IS BUILT THE WAY IT'S SUPPOSE TO (CHECK DB TEMPLATE)
   // BUILD TRACKER
   // Set section border and color
   sheet.getRange(startRow, startColumn, numberOfRows, numberOfColumns + additionalColumns).setBackground(sectionColor).setBorder(true, true, true, true, true, true, "black", solid);

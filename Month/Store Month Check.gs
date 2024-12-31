@@ -24,5 +24,5 @@ function storeMonthCheck(){
   restoreMonth(sheetName);
 
   // STOP LOADING...
-  stopLoading();
+  stopLoading(false);
 }
