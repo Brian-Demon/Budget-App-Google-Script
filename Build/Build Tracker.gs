@@ -5,10 +5,9 @@ function buildTracker( sheet, tracker, buildAll ){
     return;
   }
   // Check if passed sheet exists
-  if( !sheet ){
-    error("Sheet passed does not exists. --buildTracker()");
-    return;
-  }
+  var validateSheetIsDefaultSheet = true;
+  if (validateSheetPassed(sheet, "buildTracker", validateSheetIsDefaultSheet))
+    return false;
   
   let startRow = 0;
   let lastRow = sheet.getLastRow();
@@ -70,7 +69,7 @@ function buildTracker( sheet, tracker, buildAll ){
   sheet.setCurrentCell(activeCell);
   // CLEAR CURRENT TRACKER
   let numberOfRows = maxRows - startRow + 1;
-//  Logger.log("numberOfRows: " + numberOfRows);
+  Logger.log("numberOfRows: " + numberOfRows);
   rangeArray = [ startRow, startColumn, (maxRows - startRow), numberOfColumns ];
   clearRange(sheet, rangeArray);
 
@@ -78,13 +77,13 @@ function buildTracker( sheet, tracker, buildAll ){
   // Set section border and color
   sheet.getRange(startRow, startColumn, numberOfRows, numberOfColumns + additionalColumns).setBackground(sectionColor).setBorder(true, true, true, true, true, true, "black", solid);
   // Set section dropdowns for first column
-  let budget = getBudgetFromSheet(sheet);
+  let budgetLength = getBudgetLengthFromSheet(sheet);
   // let cell = sheet.getRange(startRow, startColumn);
   let acountValueRange = getAccountsRange();
   let valuesRange;
   let ccValueRange = getCCRange();
   if( tracker === expenseTrackerString ){
-    valuesRange = sheet.getRange(startRow, 2, budget.length, 1);
+    valuesRange = sheet.getRange(startRow, 2, budgetLength, 1);
   } else if( tracker === incomeTrackerString ){
     valuesRange = getIncomeRange();
   } else {

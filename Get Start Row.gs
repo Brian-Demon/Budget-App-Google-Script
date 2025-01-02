@@ -1,9 +1,7 @@
 function getStartRow(sheet = ss.getActiveSheet()){
-  // Check if sheet passed is valid, if not return null
-  if( defaultSheets.indexOf(sheet.getName()) > -1 ){
-    error("Sheet passed is not valid. ");
-    return null;
-  }
+  // Validate sheet
+  var validateSheetIsDefaultSheet = true;
+  validateSheetPassed(sheet, validateSheetIsDefaultSheet);
   
   // Get start row
   let lastRow = sheet.getLastRow();
@@ -15,6 +13,6 @@ function getStartRow(sheet = ss.getActiveSheet()){
       return (r + 3);
     }
   }
-  error("Something went wrong... --getStartRow()");
+  error("Start row could NOT be found. Contact support... --getStartRow()");
   return null;
 }

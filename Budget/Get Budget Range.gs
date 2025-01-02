@@ -1,9 +1,8 @@
 function getBudgetRange(sheet){
   // Check if passed sheet exist
-  if( !sheet ){
-    error('The sheet passed does not exist. --getBudgetRange()');
-    return;
-  }
+  var sheetIsDefaultSheet = false;
+  if (!validateSheetPassed(sheet, "getBudgetRange", sheetIsDefaultSheet))
+    return false;
   
   let lastRow = sheet.getLastRow();
   let lastColumn = sheet.getLastColumn();

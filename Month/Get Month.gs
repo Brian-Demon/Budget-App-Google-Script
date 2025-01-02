@@ -1,8 +1,9 @@
 function getMonth(sheet){
-  if( !sheet || defaultSheets.indexOf(sheet.getName()) !== -1 ){
-    error("Invalid sheet passed. -- getMonth()");
-    return;
-  }
+  // Validate sheet passed
+  var sheetName = sheet.getSheetName();
+  var validateSheetIsDefaultSheet = true;
+  if (!validateSheetPassed(sheet, validateSheetIsDefaultSheet))
+    return false;
   
   let lastRow = sheet.getLastRow();
   let lastColumn = sheet.getLastColumn();

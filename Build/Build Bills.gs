@@ -5,10 +5,9 @@ function buildBills(sheet, buildAll){
     return;
   }
   // Check if passed sheet exists
-  if( !sheet ){
-    error("Sheet passed does not exists. --buildBills()");
-    return;
-  }
+  var validateSheetIsDefaultSheet = false;
+  if (!validateSheetPassed(sheet, validateSheetIsDefaultSheet))
+    return false;
   
   let lastRow = sheet.getLastRow();
   let startRow = 0;

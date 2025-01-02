@@ -18,5 +18,7 @@ function getBudgetArea(){
     }
   }
   
+  var budgetAreaToString = objectToString(area);
+  // Logger.log(`Budget Area: \n\n${budgetAreaToString}`);
   return area;
 }

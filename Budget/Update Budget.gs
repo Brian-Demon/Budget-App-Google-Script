@@ -44,7 +44,6 @@ function updateBudget(){
     if( didTheBillsChange ){
       buildBills(ss.getSheetByName(currentMonthName));
     }
-    stopLoading();
     ss.toast("Budget updated in the database and Current Month successfully.");
     // STOP LOADING...
     stopLoading();

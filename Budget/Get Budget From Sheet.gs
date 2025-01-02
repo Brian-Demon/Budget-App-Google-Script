@@ -1,23 +1,21 @@
 function getBudgetFromSheet(sheet){
   // Check if sheet is valid and not a default sheet
-  if( !sheet ){
-    error("Sheet passed does not exist. --getBudgetFromSheet()");
-    return;
-  }
-  if( defaultSheets.indexOf(sheet.getName()) > -1 ){
-    error("Sheet passed is not valid. --getBudgetFromSheet()");
-    return;
-  }
+  // var sheetName = sheet.getSheetName();
+  var sheetIsDefaultSheet = true;
+  if (!validateSheetPassed(sheet, sheetIsDefaultSheet))
+    return false;
   
   // Find where budget starts, if not send error message and return
   let lastRow = sheet.getLastRow();
-  let lastColumn = sheet.getLastRow();
+  let lastColumn = sheet.getLastColumn();
   let row = 0;
-  for( let r = 1; r <= lastRow; r++ ){
-    for( let c = 1; c <= lastColumn; c++ ){
-      let value = sheet.getRange(r, c).getValue();
+  let range = sheet.getRange(1, 1, lastRow, lastColumn);
+  let rangeValues = range.getValues();
+  for (let i = 0; i < rangeValues.length; i++){
+    for (let j = 0; j < rangeValues[i].length; j++){
+      let value = rangeValues[i][j];
       if( value === "Line Item" ){
-        row = r + 2;
+        row = i + 3;
         break;
       }
     }

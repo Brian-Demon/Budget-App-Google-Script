@@ -1,7 +1,10 @@
 function getTrackerRows(sheet, section){
   // Check if sheet passed is valid 
-  if( !sheet || defaultSheets.indexOf(sheet.getName()) > -1 ){
-    error("Invalid sheet passed. --getTrackerRows()");
+  let sheetName = sheet.getName();
+  // Logger.log(`!sheet: ${!sheet}`);
+  // Logger.log(`defaultSheets.includes(sheetName): ${defaultSheets.includes(sheetName)}`)
+  if( !sheet || !defaultSheets.includes(sheetName)){
+    error(`Invalid sheet (${sheetName}) passed. --getTrackerRows()`);
     return;
   }
   // Check if section passed is valid
@@ -9,11 +12,11 @@ function getTrackerRows(sheet, section){
     error('Invalid section, "' + section + '" passed. --getTrackerRows()');
     return;
   }
-  
-  let sheetName = sheet.getName();
+
   let maxRow = sheet.getMaxRows();
   let maxColumn = sheet.getMaxColumns();
   let startRow = 0;
+  let numberOfTrackerRows = -1;
   // Find column and startRow based on section passed
   let column = 0;
   for( let r = 1; r <= maxRow; r++ ){
@@ -36,8 +39,12 @@ function getTrackerRows(sheet, section){
   for( let i = 0; i < trackerColors.length; i++ ){
     let color = trackerColors[i];
 //    Logger.log("Index: " + i + ", Color: " + color);
-    if( color == colors.white ){
-      return ( i + startRow - 1); // Return the index value which is ultimately: length of section minus startRow plus one
+    if( color[0] == colors.white ){
+      numberOfTrackerRows = (i - 1);
+      return (numberOfTrackerRows);
     }
   }
+  // If gotten this far, the end of the tracker section is the end of the sheet (maxRow)...
+  numberOfTrackerRows = maxRow - startRow - 1;
+  return (numberOfTrackerRows);
 }

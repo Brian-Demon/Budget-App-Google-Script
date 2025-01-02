@@ -10,6 +10,7 @@ const budgetSheetName = "Budget";
 const incomeSheetName = "Income";
 const ccSheetName = "CCs"
 const accountsSheetName = "Accounts";
+const currentMonthSheetName = "Current Month"; 
 
 /**********************/
 /*** DEFAULT SHEETS ***/
@@ -19,7 +20,8 @@ var defaultSheets = [
   budgetSheetName,
   incomeSheetName,
   ccSheetName,
-  accountsSheetName
+  accountsSheetName,
+  currentMonthSheetName,
 ];
 
 /************************/

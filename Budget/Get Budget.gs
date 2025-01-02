@@ -1,6 +1,5 @@
 function getBudget(){
   let sheet = ss.getSheetByName(budgetSheetName);
-  let lastRow = sheet.getLastRow();
   let area = getBudgetArea();
   let budget = [];
   

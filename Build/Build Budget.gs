@@ -227,23 +227,15 @@ function buildBudget(sheet, buildAll){
       sheet.getRange(thisMonthBalanceStartRow + i + 1, 6).setValue(formula).setNumberFormat(currencyFormat);
     }
   }
-  //****************************************//
-  // Update Expense Tracker Data Validation //
-  //****************************************//
-  let expenseStartColumn = 8;
-  let incomeStartColumn = expenseStartColumn + 6;
-  // Update Category Data
-  let valuesRange = sheet.getRange(startRow, 2, budget.length, 1);
-  let range = sheet.getRange(startRow, expenseStartColumn, 50, 1);
-  updateDataValidation(sheet, valuesRange, range);
-  // Update Account Data for Expense Tracker
-  valuesRange = sheet.getRange(thisMonthBalanceStartRow + 1, 3, numberOfAccounts, 1);
-  range = sheet.getRange(startRow, expenseStartColumn + 2, 1);
-  updateDataValidation(sheet, valuesRange, range);
-  // Update Account Data for Income Tracker
-  valuesRange = sheet.getRange(thisMonthBalanceStartRow + 1, 3, numberOfAccounts, 1);
-  range = sheet.getRange(startRow, incomeStartColumn + 2, 1);
-  updateDataValidation(sheet, valuesRange, range);
+  
+  //********************************//
+  // Update Tracker Data Validation //
+  //********************************//
+  // EXPENSE
+  updateTrackerDataValidations(sheet, expenseTrackerString);
+  // INCOME
+  updateTrackerDataValidations(sheet, incomeTrackerString);
+  
   //***********************************//
   // Set Budget Conditional Formatting //
   //***********************************//
