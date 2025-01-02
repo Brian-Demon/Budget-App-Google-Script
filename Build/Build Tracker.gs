@@ -6,13 +6,12 @@ function buildTracker( sheet, tracker, buildAll ){
   }
   // Check if passed sheet exists
   var validateSheetIsDefaultSheet = true;
-  if (validateSheetPassed(sheet, "buildTracker", validateSheetIsDefaultSheet))
+  if (!validateSheetPassed(sheet, "buildTracker", validateSheetIsDefaultSheet))
     return false;
   
   let startRow = 0;
   let lastRow = sheet.getLastRow();
   let maxRows = sheet.getMaxRows();
-  let budgetLastRow = 0;
   let startColumn = 0;
   let sectionColor;
   if( tracker === expenseTrackerString ){
@@ -69,9 +68,9 @@ function buildTracker( sheet, tracker, buildAll ){
   sheet.setCurrentCell(activeCell);
   // CLEAR CURRENT TRACKER
   let numberOfRows = maxRows - startRow + 1;
-  Logger.log("numberOfRows: " + numberOfRows);
-  rangeArray = [ startRow, startColumn, (maxRows - startRow), numberOfColumns ];
-  clearRange(sheet, rangeArray);
+  // Logger.log("numberOfRows: " + numberOfRows);
+  rangeArray = [ startRow, startColumn, (maxRows - startRow + 1), numberOfColumns ];
+  // clearRange(sheet, rangeArray);
 
   // BUILD TRACKER
   // Set section border and color
