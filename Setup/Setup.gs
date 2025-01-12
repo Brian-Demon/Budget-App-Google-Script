@@ -52,5 +52,5 @@ function setup(){
   tutorial();
   
   // Delete WELCOME sheet
-  ss.deleteSheet(ss.getSheetByName("WELCOME"));
+  // ss.deleteSheet(ss.getSheetByName("WELCOME"));
 }
