@@ -61,7 +61,7 @@ var monthSummary;
 /***********************/
 /*** OTHER VARIABLES ***/
 /***********************/
-const defaultNumberOfTrackerRows = 100;
+// const defaultNumberOfTrackerRows = 100;
 
 
 /***************/

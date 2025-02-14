@@ -26,7 +26,7 @@ function buildTracker( sheet, tracker, buildAll ){
   }
   let numberOfColumns = 5;
   
-  /// Find starting row (at "B" Column where "Expense Tracker" is located) + 2
+  // Find starting row (at "B" Column where "Expense Tracker" is located) + 2
   for( let r = 1; r <= lastRow; r++ ){
     let value = sheet.getRange(r, 8).getValue();
 //    Logger.log("Row: " + r + ', Value: "' + value);
@@ -35,23 +35,6 @@ function buildTracker( sheet, tracker, buildAll ){
       break;
     }
   }
-  for( let r = startRow; r <= sheet.getMaxRows(); r++ ){
-    let budgetValue = sheet.getRange(r, 2).getValue();
-    let color = getKeyByValue(colors, sheet.getRange(r, 8).getBackground());
-//    Logger.log("Row: " + r + ", Color: " + color);
-    if( budgetValue === "TOTALS:" ){
-      budgetLastRow = r - 1;
-    }
-    if( color === "white" ){
-      lastRow = r - 1;
-      if( lastRow < (startRow + defaultNumberOfTrackerRows - 1) ){
-        lastRow = (startRow + defaultNumberOfTrackerRows - 1);
-      }
-      break;
-    }
-  }
-//  Logger.log("startRow: " + startRow + ", lastRow: " + lastRow);
-
   if( startRow === 0 ){
     error('The sheet passed is invalid. --buildTracker()');
     return;
@@ -113,14 +96,28 @@ function buildTracker( sheet, tracker, buildAll ){
   sheet.getRange(startRow, startColumn + 4 + additionalColumns, numberOfRows, 1).setNumberFormat(currencyFormat).setHorizontalAlignment("right");
   // Total Top Right
   if( tracker === expenseTrackerString ){
-    sheet.getRange(startRow - 3, startColumn + 4 + additionalColumns).setValue("=SUM(N" + startRow + ":N" + maxRows + ")");
+    sheet.getRange(startRow - 3, startColumn + 4 + additionalColumns).setValue("=SUM(N" + startRow + ":N)");
   } else if( tracker === incomeTrackerString ){
-    sheet.getRange(startRow - 3, startColumn + 4 + additionalColumns).setValue("=SUM(T" + startRow + ":T" + maxRows + ")");
+    sheet.getRange(startRow - 3, startColumn + 4 + additionalColumns).setValue("=SUM(T" + startRow + ":T)");
   } else {
     error("Invalid tracker passed after clear then re-build sectiion. --buildTracker()");
     return;
   }
   
+  //********************************//
+  // Update Tracker Data Validation //
+  //********************************//
+  if( tracker === expenseTrackerString ){
+    // EXPENSE
+    updateTrackerDataValidations(sheet, expenseTrackerString);
+  } else if( tracker === incomeTrackerString ) {
+    // INCOME
+    updateTrackerDataValidations(sheet, incomeTrackerString);
+  } else {
+    error('Tracker passed is not valid. "' + expenseTrackerString + '" or "' + incomeTrackerString + '" are the only valid options. --buildTracker()');
+    return;
+  }
+
   //***********************************//
   // Set Budget Conditional Formatting //
   //***********************************//

@@ -228,14 +228,6 @@ function buildBudget(sheet, buildAll){
     }
   }
   
-  //********************************//
-  // Update Tracker Data Validation //
-  //********************************//
-  // EXPENSE
-  updateTrackerDataValidations(sheet, expenseTrackerString);
-  // INCOME
-  updateTrackerDataValidations(sheet, incomeTrackerString);
-  
   //***********************************//
   // Set Budget Conditional Formatting //
   //***********************************//
