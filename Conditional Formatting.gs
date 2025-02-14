@@ -74,7 +74,7 @@ function conditionalFormatting(sheet){
   //* BILLS SECTIONS *//
   //******************//
   // Paid? Column
-  let billsStartingColumn = 21;
+  let billsStartingColumn = 22;
   if( bills.length > 0 ){
     range = sheet.getRange(startRow, billsStartingColumn + 2, bills.length, 1);
     var paid = SpreadsheetApp.newConditionalFormatRule()

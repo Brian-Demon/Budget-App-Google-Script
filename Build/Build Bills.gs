@@ -11,7 +11,7 @@ function buildBills(sheet, buildAll){
   
   let lastRow = sheet.getLastRow();
   let startRow = 0;
-  let startColumn = 21;
+  let startColumn = 22;
   
   // Find starting row (at "B" Column where "Line Item" is located + 2)
   for( let r = 1; r <= lastRow; r++ ){
@@ -58,7 +58,7 @@ function buildBills(sheet, buildAll){
   sheet.getRange(startRow, startColumn + 3, numberOfRows, 3).setHorizontalAlignment("right").setNumberFormat(currencyFormat);
 
   // Set "Paid?" column cell formulas
-  sheet.getRange(startRow, startColumn + 2).setValue('=IF($Z' + startRow + ' = 0, "PAID", IF($X' + startRow + ' = 0, "NOT PAID",IF($Z' + startRow + ' < $Y' + startRow + ', "PARTIAL", "PAID")))');
+  sheet.getRange(startRow, startColumn + 2).setValue('=IF($AA' + startRow + ' = 0, "PAID", IF($Y' + startRow + ' = 0, "NOT PAID",IF($AA' + startRow + ' < $Z' + startRow + ', "PARTIAL", "PAID")))');
   if( numberOfRows > 1 ){
     sheet.getRange(startRow, startColumn + 2).copyTo(sheet.getRange(startRow + 1, startColumn + 2, numberOfRows - 1, 1));
   }
@@ -71,7 +71,7 @@ function buildBills(sheet, buildAll){
   }
 
   // Set "Difference" column cell formulas
-  sheet.getRange(startRow, startColumn + 5).setValue('=$Y' + startRow + '-$X' + startRow);
+  sheet.getRange(startRow, startColumn + 5).setValue('=$Z' + startRow + '-$Y' + startRow);
   if( numberOfRows > 1 ){
     sheet.getRange(startRow, startColumn + 5).copyTo(sheet.getRange(startRow + 1, startColumn + 5, numberOfRows - 1, 1));
   }
